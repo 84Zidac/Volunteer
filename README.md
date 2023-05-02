@@ -62,4 +62,4 @@ https://www.youtube.com/watch?v=D7zi0gFLmFQ&list=PLu0CiQ7bzwETYmTirvRfbZ9pSwiLFT
 15:38 Adding and Committing in Dev Branch
 
 
-Alex Mills 
+Alex Mills, Angel Martinez, Javier PerezParaza, Marcus Gibson, Olena Reva, Terrence Doyle
