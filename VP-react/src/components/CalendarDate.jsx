@@ -18,10 +18,9 @@ export default function CalendarDate() {
     useEffect(() => {
       async function fetchData() {
         // Fetch weather data
-        const apiKey = 'Youre API key';
         const city = 'Wichita';
         const countryCode = 'us';
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city},${countryCode}&appid=${apiKey}&units=imperial`);
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city},${countryCode}&appid=${import.meta.env.VITE_OPENWEATHERMAP_API_KEY}&units=imperial`);
         const data = await response.json();
         setWeatherData(data);
 
