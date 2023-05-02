@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'user_app',
     'volunteer_app',
     'weather_info',
+    'event_app',
+    'organization_app',
 ]
 
 MIDDLEWARE = [

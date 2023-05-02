@@ -69,6 +69,7 @@ export default function CalendarDate() {
       const postData = {
         date: isoDate,
         num_guests: document.getElementById("guestVolunteer").value,
+        // event_id: 1
       };
   
       console.log("Data to be sent:", postData);

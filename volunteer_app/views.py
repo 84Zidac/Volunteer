@@ -1,7 +1,7 @@
 # /Users/alexandermills/Documents/personal_projects/VolunteerPlanner/VP_django_app/views.py
 import os
 from django.http import JsonResponse  
-from .models import Volunteer
+from .models import Volunteer_Registration
 from django.db.models import Sum
 from datetime import datetime
 from rest_framework.permissions import IsAuthenticated
@@ -16,7 +16,7 @@ from sendgrid.helpers.mail import Mail
 def get_volunteers_count(request, date):
     try:
         date_object = datetime.strptime(date, "%Y-%m-%d").date()
-        total_volunteers = Volunteer.objects \
+        total_volunteers = Volunteer_Registration.objects \
             .filter(registration_date=date_object) \
             .aggregate(total=Sum('num_guests'))['total']
         return JsonResponse({
@@ -32,14 +32,14 @@ def get_volunteers_count(request, date):
 def get_volunteers_list(request, date):
     try:
         date_object = datetime.strptime(date, "%Y-%m-%d").date()
-        volunteers = Volunteer.objects.filter(registration_date=date_object)
+        volunteers = Volunteer_Registration.objects.filter(registration_date=date_object)
         volunteers_data = [{"id": v.id, "name": f"{v.user.first_name} {v.user.last_name}", "num_guests": v.num_guests} for v in volunteers]
         return JsonResponse({"volunteers": volunteers_data})
     except Exception as e:
         print(e)
         return JsonResponse({"error": str(e)})
 
-
+# hardcoded event_id to equal to pass information
 @csrf_exempt
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
@@ -53,9 +53,10 @@ def register_volunteer(request):
         print(num_guests)
         # date_object = datetime.strptime(date, "%Y-%m-%d").date()
         # print(date_object)
-        volunteer = Volunteer(user=user,
+        volunteer = Volunteer_Registration(user=user,
                               registration_date=date,
-                              num_guests=num_guests)
+                              num_guests=num_guests,
+                              event_id=1)
         volunteer.save()
 
         # Send email using SendGrid
@@ -91,7 +92,7 @@ def delete_volunteer_registration(request, date):
     try:
         user = request.user
         date_object = datetime.strptime(date, "%Y-%m-%d").date()
-        volunteer = Volunteer.objects.filter(user_id=user.id, registration_date=date_object).first()
+        volunteer = Volunteer_Registration.objects.filter(user_id=user.id, registration_date=date_object).first()
         if volunteer is None:
             return JsonResponse({"error": "Volunteer registration not found"})
         volunteer.delete()
@@ -99,14 +100,14 @@ def delete_volunteer_registration(request, date):
     except Exception as e:
         print(e)
         return JsonResponse({"error": str(e)})
-    
+
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_user_volunteer_list(request):
     try:
         user = request.user
-        volunteer_list = Volunteer.objects.filter(user=user)
+        volunteer_list = Volunteer_Registration.objects.filter(user=user)
         volunteer_data = [{"id": v.id, "registration_date": v.registration_date.strftime("%Y-%m-%d"), "num_guests": v.num_guests} for v in volunteer_list]
         return JsonResponse({"user_volunteer_list": volunteer_data})
     except Exception as e:
@@ -114,46 +115,6 @@ def get_user_volunteer_list(request):
         return JsonResponse({"error": str(e)})
 
 
-# # I dont know how this program will react to me not including the num of guests
-# @api_view(["DELETE"])
-# @permission_classes([IsAuthenticated])
-# def delete_volunteer_registration(request, date):
-#     try:
-#         user = request.user
-#         print(user)
-#         date = request.data.get('date')
-#         print(date)
-#         # date_object = datetime.strptime(date, "%Y-%m-%d").date()
-#         # volunteer = Volunteer.objects.filter(user_id=user_id, registration_date=date_object)
-#         volunteer = Volunteer(user=user,
-#                         registration_date=date)
-#         volunteer.delete()
-#         return JsonResponse({"message": "Volunteer registration deleted successfully"})
-#     except Exception as e:
-#         print(e)
-#         return JsonResponse({"error": str(e)})
-
-
-# # * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-
-
-
-# # * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-# @api_view(["DELETE"])
-# @permission_classes([IsAuthenticated])
-# def delete_volunteer_registration(request, user_id, date):
-#     try:
-#         date_object = datetime.strptime(date, "%Y-%m-%d").date()
-#         volunteer = Volunteer.objects.filter(user_id=user_id, registration_date=date_object)
-#         volunteer.delete()
-#         return JsonResponse({"message": "Volunteer registration deleted successfully"})
-#     except Exception as e:
-#         print(e)
-#         return JsonResponse({"error": str(e)})
-
-
-
-# # * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 # @csrf_exempt
 # @api_view(["POST"])
@@ -169,7 +130,7 @@ def get_user_volunteer_list(request):
 #         print(num_guests)
 #         # date_object = datetime.strptime(date, "%Y-%m-%d").date()
 #         # print(date_object)
-#         volunteer = Volunteer(user=user,
+#         volunteer = Volunteer_Registration(user=user,
 #                               registration_date=date,
 #                               num_guests=num_guests)
 #         volunteer.save()
