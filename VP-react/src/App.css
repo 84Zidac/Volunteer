@@ -13,7 +13,6 @@ body {
   padding: 2rem;
   text-align: center;
   background-color: #f3e5ab;
-  /* font-family: "Open Sans", sans-serif; */
   font-family: "Open Sans", sans-serif;
 }
 
@@ -50,4 +49,9 @@ body {
 
 .read-the-docs {
   color: #888;
+}
+
+.map-container {
+  width: 100vh;
+  height: 83vh;
 }
