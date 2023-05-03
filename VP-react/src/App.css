@@ -8,15 +8,15 @@ body {
 
 
 #root {
-  max-width: 1280px;
+  /* max-width: 1280px; */
   margin: 0 auto;
-  padding: 2rem;
+  /* padding: 2rem; */
   text-align: center;
   background-color: #f3e5ab;
   font-family: "Open Sans", sans-serif;
 }
 
-.logo {
+/* .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
@@ -26,7 +26,7 @@ body {
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
-}
+} */
 
 @keyframes logo-spin {
   from {
@@ -54,4 +54,12 @@ body {
 .map-container {
   width: 100vh;
   height: 83vh;
+}
+
+.main{
+  margin: 10em 2em 5em 2em;
+}
+
+.bottom-footer{
+  color: white;
 }
