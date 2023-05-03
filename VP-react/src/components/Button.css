@@ -43,3 +43,8 @@
 .nav-button:not(:last-child) {
     /* margin-right: 1rem; */
 }
+
+.log-in-button-div {
+    display: flex;
+    flex-direction: column;
+}
