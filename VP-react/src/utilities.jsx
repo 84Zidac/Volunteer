@@ -54,3 +54,9 @@ export const logOut = async(setUser) => {
         setUser(null)
     }
 }
+
+export const getEvents = async() => {
+    let response = await axios.get('/events/')
+    return response.data
+}
+
