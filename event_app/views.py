@@ -29,7 +29,7 @@ def events_handler(request):
                     'state': event.address.state,
                     'zipcode': event.address.zipcode
                 },
-                'organization': event.organization.name
+                'organization': event.organization.organization_name
             }
             event_list.append(event_dict)
 

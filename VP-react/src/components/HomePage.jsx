@@ -3,6 +3,7 @@ import { useLoadScript, useJsApiLoader } from "@react-google-maps/api";
 import { getEvents } from "../utilities";
 import { useState, useEffect } from "react";
 
+const libraries = ["places"];
 export default function HomePage() {
   const [addresses, setAddresses] = useState(null);
 
@@ -10,7 +11,7 @@ export default function HomePage() {
     const fetchData = async () => {
       const events = await getEvents();
       if (events.success) {
-        const addressList = events.map((event) => {
+        const addressList = events.events.map((event) => {
           const { street, city, state, zipcode } = event.address;
           return `${street}, ${city}, ${state} ${zipcode}`;
         });
@@ -32,7 +33,6 @@ export default function HomePage() {
     "4177 Arctic Blvd #101, Anchorage, AK 99503",
     "1100 Gambell St, Anchorage, AK 99501",
   ];
-  const libraries = ["places"];
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyBPOv4E9erS7mWYHQXo7Kb58yCiUQcT0X4",
