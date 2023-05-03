@@ -43,7 +43,7 @@ export default function HomePage() {
     return (
       <div className="background_photo">
         <img
-          src="https://media.istockphoto.com/id/1347280688/vector/group-of-volunteers.jpg?s=612x612&w=0&k=20&c=3rRmrcQm_E-ObRLq0snf5tiuW242011FqFrC3a5L08E="
+          src="https://thehill.com/wp-content/uploads/sites/2/2023/01/CA_volunteer_01252023istock.jpg?strip=1"
           alt="Volunteer Compass"
           style={{ height: "100vh", objectFit: "cover", position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: -1}}
         />
