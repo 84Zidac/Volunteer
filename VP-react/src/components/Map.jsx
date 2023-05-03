@@ -4,7 +4,6 @@ import { GoogleMap, Marker, InfoWindow, Circle } from "@react-google-maps/api";
 
 // Define the Map component and receive the addresses prop
 export default function Map({ addresses }) {
-
   // Declare state variables to store activeMarker, userLocation, and circleDistance
   const [activeMarker, setActiveMarker] = React.useState(null);
   const [userLocation, setUserLocation] = React.useState(null);
@@ -13,10 +12,8 @@ export default function Map({ addresses }) {
   // Use the useEffect hook to get the user's location
   React.useEffect(() => {
     if (navigator.geolocation) {
-      // Get the user's current position
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          // Set the userLocation state variable to the user's current location
           setUserLocation({
             lat: position.coords.latitude,
             lng: position.coords.longitude,
@@ -24,10 +21,12 @@ export default function Map({ addresses }) {
         },
         (error) => {
           console.error(`Geolocation error: ${error.message}`);
+          setUserLocation({ lat: 41.8781, lng: -87.6298 }); // Set default location to Chicago
         }
       );
     } else {
       console.error("Geolocation is not supported by this browser.");
+      setUserLocation({ lat: 41.8781, lng: -87.6298 }); // Set default location to Chicago
     }
   }, []);
 
@@ -48,6 +47,7 @@ export default function Map({ addresses }) {
     // Set the circleDistance state variable to the selected distance value
     setCircleDistance(parseInt(event.target.value));
   }
+  
 
   // If the userLocation state variable is not set, display a message asking the user to enable geolocation
   if (!userLocation) {
@@ -77,7 +77,6 @@ export default function Map({ addresses }) {
         zoom={10}
         center={userLocation}
         mapContainerClassName="map-container"
-
       >
         {/* Display a circle around the user's location based on the selected distance */}
         {userLocation && (
@@ -87,44 +86,43 @@ export default function Map({ addresses }) {
             options={{
               strokeColor: "#FF0000",
               strokeOpacity: 0.8,
-              strokeWeight: 2,fillColor: "#FF0000",
+              strokeWeight: 2,
+              fillColor: "#FF0000",
               fillOpacity: 0.15,
             }}
           />
-          )}
-          
-          {/* Render a marker for each address in the addresses prop */}
-          {addresses.map((address, index) => (
-            <Marker
-              key={index}
-              position={null}
-              label={`${index + 1}`}
-              onLoad={(marker) => {
-                // Geocode the address to get its latitude and longitude
-                const geocoder = new window.google.maps.Geocoder();
-                geocoder.geocode({ address }, (results, status) => {
-                  if (status === "OK") {
-                    marker.setPosition(results[0].geometry.location);
-                  } else {
-                    console.error(
-                      `Geocode failed for ${address} with status ${status}`
-                    );
-                  }
-                });
-              }}
-              onClick={() => handleMarkerClick(index)}
-            >
-              {/* Display an InfoWindow for the active marker */}
-              {activeMarker === index && (
-                <InfoWindow onCloseClick={handleInfoWindowClose}>
-                  <div>{address}</div>
-                </InfoWindow>
-              )}
-            </Marker>
-          ))}
-        </GoogleMap>
-      </div>
-    );
-  }
+        )}
 
-
+        {/* Render a marker for each address in the addresses prop */}
+        {addresses.map((address, index) => (
+          <Marker
+            key={index}
+            position={null}
+            label={`${index + 1}`}
+            onLoad={(marker) => {
+              // Geocode the address to get its latitude and longitude
+              const geocoder = new window.google.maps.Geocoder();
+              geocoder.geocode({ address }, (results, status) => {
+                if (status === "OK") {
+                  marker.setPosition(results[0].geometry.location);
+                } else {
+                  console.error(
+                    `Geocode failed for ${address} with status ${status}`
+                  );
+                }
+              });
+            }}
+            onClick={() => handleMarkerClick(index)}
+          >
+            {/* Display an InfoWindow for the active marker */}
+            {activeMarker === index && (
+              <InfoWindow onCloseClick={handleInfoWindowClose}>
+                <div>{address}</div>
+              </InfoWindow>
+            )}
+          </Marker>
+        ))}
+      </GoogleMap>
+    </div>
+  );
+}
