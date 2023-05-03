@@ -7,7 +7,7 @@
     font-size: 1rem;
     font-weight: bold;
     background-color: #fff;
-    color: #646cff;
+    color: #204051;
     transition: all 0.2s ease-in-out;
     margin-bottom: 0.5rem;
     margin-right: 0.5rem;
@@ -17,4 +17,13 @@
     outline: none;
     box-shadow: 0 0 0 3px rgba(100, 108, 255, 0.3);
 }
-  
+
+.log-in-input-div{
+    display: flex;
+    flex-direction: column;
+}
+
+.password-input-div{
+    display: flex;
+    flex-direction: row;
+}
