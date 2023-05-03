@@ -10,6 +10,8 @@ class App_User(AbstractUser):
     # Tells Django to utilize users email as their username
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
+    is_coordinator = models.BooleanField(default=False)
+    is_assistant = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} | {self.email}"
