@@ -3,9 +3,21 @@
 .nav-buttons {
     display: flex;
     gap: 1rem;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
-    margin: 1rem 0;
+    margin: 1rem 1rem 0 1rem;
+}
+
+.right-bottons{
+    display: flex;
+    flex-direction: row;
+}
+
+.inner-right-buttons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap:10px;
 }
   
 .nav-button {
@@ -15,7 +27,7 @@
     font-size: 1rem;
     font-weight: bold;
     text-transform: uppercase;
-    background-color: #646cff;
+    background-color: #84A9AC;
     color: #fff;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
@@ -25,10 +37,9 @@
   
 .nav-button:hover {
     background-color: #fff;
-    color: #646cff;
+    color: #3B6978;
 }
   
 .nav-button:not(:last-child) {
     /* margin-right: 1rem; */
 }
-  

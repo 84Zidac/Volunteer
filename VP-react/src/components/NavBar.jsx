@@ -4,6 +4,17 @@ import { logOut } from "../utilities";
 import { UserContext } from "../App";
 import { useContext } from 'react';
 import "./Button.css";
+import { AppBar } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#204051'  //color of the nav-bar should be changed here
+      },
+    },
+  });
+
 
 export const NavBar = ()=> {
 
@@ -14,29 +25,39 @@ export const NavBar = ()=> {
     };
 
     return (
-        <div className="nav-buttons">
-        {user && user.name ? (
+        <ThemeProvider theme={theme}>
+            <AppBar color="primary">
+                <div className="nav-buttons">
+                    <div className="logo">
+                        <h1>VolunteerCompass</h1>
+                    </div>
+                    <div className="right-buttons">
+                        {user && user.name ? (
 
-            <>
-                <h1>Hello {user.name.toUpperCase()}</h1>
-                <Link to="/">
-                    <button className="nav-button" onClick={handleLogout}>LOG OUT</button>
-                </Link>
-                <Link to="/user/dashboard">
-                    <button className="nav-button">Dashboard</button>
-                </Link>
-            </>
-        ) : (
-            <>
-                <Link to="/register">
-                        <button className="nav-button">Register</button>
-                </Link>
-                <Link to="/login/">
-                        <button className="nav-button">Login</button>
-                </Link>
-            </>
-        )}
-        </div>
+                            <div className="inner-right-buttons">
+                                <h1>Hello {user.name.toUpperCase()}</h1>
+                                <Link to="/">
+                                    <button className="nav-button" onClick={handleLogout}>LOG OUT</button>
+                                </Link>
+                                <Link to="/user/dashboard">
+                                    <button className="nav-button">Dashboard</button>
+                                </Link>
+                            </div>
+                        ) : (
+                            <div className="inner-right-buttons">
+                                <Link to="/register">
+                                        <button className="nav-button">Register</button>
+                                </Link>
+                                <Link to="/login/">
+                                        <button className="nav-button">Login</button>
+                                </Link>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </AppBar>
+        </ThemeProvider>
+        
     );
 };
 

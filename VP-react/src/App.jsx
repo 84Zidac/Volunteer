@@ -133,6 +133,7 @@ import { currUser, logOut } from "./utilities";
 import { getToken } from "./components/CsrfToken";
 import { Outlet } from "react-router-dom";
 import { NavBar } from "./components/NavBar";
+import Footer from "./components/Footer";
 
 export const UserContext = createContext(null);
 
@@ -153,10 +154,11 @@ function App() {
       <UserContext.Provider value={{ user, setUser }}>
         <NavBar />
         {/* <h1>Hello {user && user.name && user.name.toUpperCase()}</h1> */}
-        <Outlet />
+          <div className='main'>
+              <Outlet />
+          </div>
       </UserContext.Provider>
-
-      <footer></footer>
+      <Footer/>
     </div>
   );
 }
