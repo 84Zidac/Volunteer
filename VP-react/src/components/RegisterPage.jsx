@@ -1,6 +1,7 @@
 // /Users/alexandermills/Documents/personal_projects/VolunteerPlanner/VP-react/src/components/RegisterPage.jsx
 // import { useEffect, useState } from "react";
 import { useState } from "react";
+import {useNavigate} from 'react-router-dom';
 import { signUp } from "../utilities";
 import "./Button.css";
 import "./Input.css";
@@ -10,6 +11,7 @@ export const Register = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate()
 
 
   return (
@@ -21,7 +23,7 @@ export const Register = () => {
         setPassword(""),
         setFirstName(""),
         setLastName(""),
-
+        navigate("/login")
       ]}
       style={{ display: "flex", flexDirection: "column" }}
         >
