@@ -23,4 +23,6 @@ urlpatterns = [
     path('', include('user_app.urls')),
     path('', include('volunteer_app.urls')),
     path('', include('weather_info.urls')),
+    path('', include('event_app.urls')),
+    path('', include('organization_app.urls')),
 ]
