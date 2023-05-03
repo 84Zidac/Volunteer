@@ -15,10 +15,10 @@ export const NavBar = ()=> {
 
     return (
         <div className="nav-buttons">
-        {user ? (
+        {user && user.name ? (
 
             <>
-                <h1>Hello {user && user.name && user.name.toUpperCase()}</h1>
+                <h1>Hello {user.name.toUpperCase()}</h1>
                 <Link to="/">
                     <button className="nav-button" onClick={handleLogout}>LOG OUT</button>
                 </Link>
