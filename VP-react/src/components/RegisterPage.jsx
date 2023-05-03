@@ -23,7 +23,6 @@ export const Register = () => {
         setPassword(""),
         setFirstName(""),
         setLastName(""),
-        console.log("navigate"),
         navigate("/login")
       ]}
       style={{ display: "flex", flexDirection: "column" }}
