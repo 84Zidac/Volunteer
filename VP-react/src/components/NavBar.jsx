@@ -42,6 +42,12 @@ export const NavBar = ()=> {
                                 <Link to="/user/dashboard">
                                     <button className="nav-button">Dashboard</button>
                                 </Link>
+                                <Link to="/user/dashboard">
+                                    <button className="nav-button">Dashboard</button>
+                                </Link>
+                                <Link to="/checkin">
+                                    <button className="nav-button">Check In</button>
+                                </Link>
                             </div>
                         ) : (
                             <div className="inner-right-buttons">
