@@ -1,4 +1,3 @@
-// /Users/alexandermills/Documents/personal_projects/VolunteerPlanner/VP-react/src/components/HomePage.jsx
 import Map from "./Map";
 import { useLoadScript, useJsApiLoader } from "@react-google-maps/api";
 import { getEvents } from "../utilities";
@@ -39,26 +38,40 @@ export default function HomePage() {
     googleMapsApiKey: "AIzaSyBPOv4E9erS7mWYHQXo7Kb58yCiUQcT0X4",
     libraries,
   });
+
   if (!isLoaded) {
     return (
-      <div>
-        <h1>nope Lord's Diner Scheduler</h1>
+      <div className="background_photo">
         <img
-          src="https://thelordsdiner.org/wp-content/uploads/2019/12/logo-e1581539139778-300x212.png"
-          alt="Lord's Diner logo"
+          src="https://media.istockphoto.com/id/1347280688/vector/group-of-volunteers.jpg?s=612x612&w=0&k=20&c=3rRmrcQm_E-ObRLq0snf5tiuW242011FqFrC3a5L08E="
+          alt="Volunteer Compass"
+          style={{ height: "100vh", objectFit: "cover", position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: -1}}
         />
+        <h1>Welcome</h1>
         Loading...
       </div>
     );
   }
+
   return (
     <>
-      <h1>Lord's Diner Scheduler</h1>
       <img
-        src="https://thelordsdiner.org/wp-content/uploads/2019/12/logo-e1581539139778-300x212.png"
-        alt="Lord's Diner logo"
+        src="https://thehill.com/wp-content/uploads/sites/2/2023/01/CA_volunteer_01252023istock.jpg?strip=1"
+        alt="Volunteer Compass"
+        style={{ height: "100vh", width: '100%', objectFit: "cover", position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: -1 }}
       />
+      <div style={{ marginTop: "700px" }}>
+      <h1 style={{fontFamily: 'cursive'}}>Welcome</h1>
+      <h2>Find Events Near You</h2>
+      <div style={{display: "flex", justifyContent: "center"}}>
       <Map addresses={addresses ? addresses : test_addresses} />
+      </div>
+      </div>
     </>
   );
 }
+
+
+
+
+

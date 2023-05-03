@@ -126,7 +126,6 @@
 
 // export default App;
 
-
 import { createContext, useEffect, useState } from "react";
 import "./App.css";
 import { currUser, logOut } from "./utilities"; 
