@@ -54,18 +54,21 @@ export const VolunteerRegister = () => {
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
                       className="input-field"
+                      required
                   />
                   <input
                       placeholder="Last Name"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
                       className="input-field"
+                      required
                   />
                   <input
                       placeholder="Email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className="input-field"
+                      required
                   />
                   <input
                       placeholder="Password"
@@ -73,6 +76,7 @@ export const VolunteerRegister = () => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       className="input-field"
+                      required
                   />
                   <input 
                       type={"password"} 
@@ -80,6 +84,7 @@ export const VolunteerRegister = () => {
                       value = {confirmedPassword}
                       onChange = {(e) => setConfirmedPassword(e.target.value)}
                       className="input-field"
+                      required
                   />
                 </div>
                 <div className="sign-up-button-div">

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {useNavigate} from 'react-router-dom';
-import { signUp } from "../utilities";
+import { createOrgUser } from "../utilities";
 import "./Button.css";
 import "./Input.css";
 import "./RegisterPage.css"
@@ -25,15 +25,25 @@ export default function OrgRegister() {
 
   const checkForMatch =(password, confirmedPassword)=> {
     if (password === confirmedPassword) {
-      signUp(firstName,
+      createOrgUser(firstName,
         lastName,
         email,
-        password)
+        password,
+        orgName, 
+        description, 
+        website, 
+        orgEmail, 
+        orgPhone)
       setEmail("")
       setPassword("")
       setFirstName("")
       setLastName("")
       setConfirmedPassword("")
+      setOrgName("")
+      setDescription("")
+      setWebsite("")
+      setOrgEmail("")
+      setOrgPhone("")
       navigate("/login")
     }
     else {
@@ -51,17 +61,7 @@ export default function OrgRegister() {
             <form
                 onSubmit={(e) => [
                   e.preventDefault(),
-                  signUp(firstName, lastName, email, password),
-                  setEmail(""),
-                  setPassword(""),
-                  setFirstName(""),
-                  setLastName(""),
-                  setOrgEmail(""),
-                  setOrgName(""),
-                  setOrgPhone(""),
-                  setDescription(""),
-                  setWebsite(""),
-                  navigate("/login")
+                  checkForMatch(password, confirmedPassword)
                 ]}
                 style={{ display: "flex", flexDirection: "column" }}
                   >
@@ -70,9 +70,10 @@ export default function OrgRegister() {
                       value={orgName}
                       onChange={(e) => setOrgName(e.target.value)}
                       className="input-field"
+                      required
                   />
                   <input
-                      type="url"
+                      type="text"
                       placeholder="Website"
                       value={website}
                       onChange={(e) => setWebsite(e.target.value)}
@@ -84,6 +85,7 @@ export default function OrgRegister() {
                       type = "email"
                       onChange={(e) => setOrgEmail(e.target.value)}
                       className="input-field"
+                      required
                   />
                   <input
                       placeholder="Phone number XXX-XXX-XXXX"
@@ -92,6 +94,7 @@ export default function OrgRegister() {
                       maxlength="12"
                       onChange={(e) => setOrgPhone(e.target.value)}
                       className="input-field"
+                      required
                   />
                   <textarea
                       placeholder="Description"
@@ -100,27 +103,29 @@ export default function OrgRegister() {
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                       className="input-field textarea"
+                      required
                   />
-
-
                   <h3 style = {{color:"white"}}>Tell us about your yourself!</h3>
                   <input
                       placeholder="First Name"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
                       className="input-field"
+                      required
                   />
                   <input
                       placeholder="Last Name"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
                       className="input-field"
+                      required
                   />
                   <input
                       placeholder="Email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className="input-field"
+                      required
                   />
                   <input
                       placeholder="Password"
@@ -128,13 +133,15 @@ export default function OrgRegister() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       className="input-field"
+                      required
                   />
                   <input
                       placeholder="Confirm password"
                       type="password"
-                      value={password}
+                      value={confirmedPassword}
                       onChange={(e) => setConfirmedPassword(e.target.value)}
                       className="input-field"
+                      required
                   />
                   <div className="sign-up-button-div">
                     <input type="submit" value="Submit!" className="nav-button"/>
