@@ -14,7 +14,7 @@ class Event(models.Model):
     start_time = models.DateTimeField(null=False, blank=False)
     end_time = models.DateTimeField(null=False, blank=False)
     description = models.TextField(blank=False, null=False)
-    volunteers_reqired = models.IntegerField(null=False, blank=False)
+    volunteers_required = models.IntegerField(null=False, blank=False)
     protective_equipment = models.TextField(null=True)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)

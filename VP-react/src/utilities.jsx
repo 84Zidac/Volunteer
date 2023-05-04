@@ -60,3 +60,34 @@ export const getEvents = async() => {
     return response.data
 }
 
+export const createEvent = async (
+    eventName,
+    startTime,
+    endTime,
+    description,
+    volunteersRequired,
+    protectiveEquipment,
+    street,
+    city,
+    state,
+    zipcode,
+    organization
+  ) => {
+    let response = await axios.post('/event-creation/', {
+      event_name: eventName,
+      start_time: startTime,
+      end_time: endTime,
+      description: description,
+      volunteers_required: volunteersRequired,
+      protective_equipment: protectiveEquipment,
+      street: street,
+      city: city,
+      state: state,
+      zipcode: zipcode,
+      organization: organization,
+    });
+  
+    console.log(response.data.success);
+    return response.data.success;
+  };
+  
