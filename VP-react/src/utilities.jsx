@@ -12,7 +12,28 @@ export const signUp = async (firstName, lastName, email, password) => {
     return response.data.success;
   };
 
-
+  export const createOrgUser = async (firstName, 
+                                     lastName, 
+                                     email, 
+                                     password, 
+                                     orgName, 
+                                     description, 
+                                     website, 
+                                     orgEmail, 
+                                     orgPhone) => {
+    let response = await axios.post('/organization/', {
+        first_name: firstName, 
+        last_name: lastName,
+        email: email,
+        password: password,
+        organization_name: orgName,
+        description: description,
+        website: website,
+        contact_email: orgEmail,
+        phone_number: orgPhone
+    })
+    return response.data.success
+    };
 // export const logIn = async(email, password, setUser) => {
 //     let response = await axios.post('/user/login/', {
 //         'email' : email,
