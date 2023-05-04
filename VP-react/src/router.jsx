@@ -7,6 +7,7 @@ import { LogIn } from "./components/LoginPage";
 import { Register } from "./components/RegisterPage";
 import UserDashboard from "./components/UserDashboard";
 import CalendarDate from "./components/CalendarDate";
+import { CheckInPage } from "./components/CheckInPage";
 
 
 const router = createBrowserRouter([
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
             {
                 path: "calendar-date/:date",
                 element: <CalendarDate />,
+            },
+            {
+                path: "checkin",
+                element: <CheckInPage />,
             },
         ],
     },
