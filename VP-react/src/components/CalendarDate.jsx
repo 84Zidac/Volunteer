@@ -18,9 +18,13 @@ export default function CalendarDate() {
     useEffect(() => {
       async function fetchData() {
         // Fetch weather data
+        // const city = 'Wichita';
+        // const countryCode = 'us';
+        // const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city},${countryCode}&appid=${import.meta.env.VITE_OPENWEATHERMAP_API_KEY}&units=imperial`);
         const city = 'Wichita';
-        const countryCode = 'us';
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city},${countryCode}&appid=${import.meta.env.VITE_OPENWEATHERMAP_API_KEY}&units=imperial`);
+        const stateCode = 'KS';
+        const countryCode = 'US';
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city},${stateCode},${countryCode}&appid=${import.meta.env.VITE_OPENWEATHERMAP_API_KEY}&units=imperial`);
         const data = await response.json();
         setWeatherData(data);
 
@@ -99,61 +103,70 @@ export default function CalendarDate() {
     return <div>Loading... </div>;
   }
 
-  return (
-    <div>
-      <h1>Calendar Date: {formattedDate}</h1>
-      {/* example date as seen on the website "Tue Apr 25 2023"*/}
-      {weatherData && (
-        <div>
-          <h1>Current weather at Lord's Diner (Wichita, KS):</h1>
-          <h3>Temperature: {weatherData.main.temp}°F</h3>
-          <h3>Humidity: {weatherData.main.humidity}%</h3>
-        </div>
-      )}
-
-      {/* <p>SIGN UP HERE! :)</p> */}
-      <div className="form-container">
-        <form>
-          <label htmlFor="guestVolunteer">Number of Guests</label>
-          <input
-            id="guestVolunteer"
-            type="number"
-            min="0"
-            defaultValue="0"
-            className="input-field"
-          />
-        </form>
-        <input 
-          type="Register" 
-          value="Register" 
-          className="nav-button"
-          onClick={handleRegisterClick}
-        />
+return (
+  <div>
+    <h1>Calendar Date: {formattedDate}</h1>
+    {weatherData && (
+      <div>
+        <h1>5-day forecast for {weatherData.city.name}, {weatherData.city.country}</h1>
+        {weatherData.list.map((item, index) => {
+          // Display data for every 8th item in the list, which corresponds to every day
+          if (index % 8 === 0) {
+            return (
+              <div key={item.dt}>
+                <h3>{new Date(item.dt_txt).toLocaleDateString()}</h3>
+                <p>Temperature: {item.main.temp}°F</p>
+                <p>Humidity: {item.main.humidity}%</p>
+              </div>
+            );
+          } else {
+            return null;
+          }
+        })}
       </div>
+    )}
 
-      <input 
-        type="Unregister" 
-        value="Unregister" 
+    <div className="form-container">
+      <form>
+        <label htmlFor="guestVolunteer">Number of Guests</label>
+        <input
+          id="guestVolunteer"
+          type="number"
+          min="0"
+          defaultValue="0"
+          className="input-field"
+        />
+      </form>
+      <input
+        type="Register"
+        value="Register"
         className="nav-button"
-        onClick={handleUnRegisterClick}
+        onClick={handleRegisterClick}
       />
-      
-      {volunteers && volunteers.length > 0 && (
-        <div>
-          <h2>Volunteers for {formattedDate}</h2>
-          <ul>
-            {volunteers.map((v) => (
-              <li key={v.id}>
-                {v.name} - {v.num_guests} guests
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-        
     </div>
-  );
-}
+
+    <input
+      type="Unregister"
+      value="Unregister"
+      className="nav-button"
+      onClick={handleUnRegisterClick}
+    />
+
+    {volunteers && volunteers.length > 0 && (
+      <div>
+        <h2>Volunteers for {formattedDate}</h2>
+        <ul>
+          {volunteers.map((v) => (
+            <li key={v.id}>
+              {v.name} - {v.num_guests} guests
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+  </div>
+);
+          }
 
 
   // const handleRegisterClick = async () => {
@@ -183,6 +196,3 @@ export default function CalendarDate() {
   //     alert("Error occurred: " + error);
   //   }
   // };
-  
-  // this is correctly POST to the db but it is buggy. 
-  // bugs to fix need to have 
