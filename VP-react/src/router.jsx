@@ -8,6 +8,9 @@ import { Register } from "./components/RegisterPage";
 import UserDashboard from "./components/UserDashboard";
 import CalendarDate from "./components/CalendarDate";
 import { CheckInPage } from "./components/CheckInPage";
+import EventCreationPage from "./components/EventCreationPage";
+import EventOrganizerDashboard from "./components/EventOrganizerDashboard";
+
 
 
 const router = createBrowserRouter([
@@ -39,6 +42,14 @@ const router = createBrowserRouter([
             {
                 path: "checkin",
                 element: <CheckInPage />,
+            },
+            {
+                path: "event-creation",
+                element: <EventCreationPage />,
+            },
+            {
+                path: "organizer/dashboard",
+                element: <EventOrganizerDashboard />,
             },
         ],
     },
