@@ -26,7 +26,7 @@ def events_handler(request):
                 'start_time': event.start_time.isoformat(),
                 'end_time': event.end_time.isoformat(),
                 'description': event.description,
-                'volunteers_required': event.volunteers_reqired,
+                'volunteers_required': event.volunteers_required,
                 'protective_equipment': event.protective_equipment,
                 'address': {
                     'street': event.address.street,
