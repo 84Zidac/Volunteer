@@ -63,7 +63,7 @@ export const LogIn = () => {
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="input-field"
+                  className="input-field password-field"
                 />
                 <IconButton
                     size="large"

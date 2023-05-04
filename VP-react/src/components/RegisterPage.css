@@ -1,0 +1,43 @@
+.registration-page{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.registration-selection{
+  display: flex;
+  flex-direction: row;
+  gap:30px;
+}
+
+.volunteer-selector, .coordinator-selector{
+  display: flex;
+  flex-direction: column;
+  margin: 1em 1em 1em 1em;
+}
+
+.sign-up-button-div{
+  display: flex;
+  flex-direction: column;
+}
+
+.sign-up-input-div{
+  display: flex;
+  flex-direction: column;
+}
+
+.sign-up-button-div{
+  display: flex;
+  gap: 10px;
+  flex-direction: row;
+  align-self: center;
+  margin-top: 1em;
+}
+
+.register-forms {
+  margin-top: 1em;
+}
+
+.textarea{
+  height: 100px;
+}

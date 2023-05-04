@@ -1,59 +1,69 @@
 // /Users/alexandermills/Documents/personal_projects/VolunteerPlanner/VP-react/src/components/RegisterPage.jsx
-// import { useEffect, useState } from "react";
 import { useState } from "react";
-import {useNavigate} from 'react-router-dom';
-import { signUp } from "../utilities";
 import "./Button.css";
 import "./Input.css";
+import "./RegisterPage.css";
+import volunteer from '../images/help.png';
+import organization from '../images/non-profit-organization.png';
+import {VolunteerRegister} from "./VolunteerRegister";
+import OrgRegister from "./OrgRegister";
+import { Paper } from '@mui/material';
+import { styled } from '@mui/material/styles';
+
+
+const CustomPaper = styled(Paper)(({ theme }) => ({
+  backgroundColor: "#FFFFFF",
+  transition: 'background-color 0.3s ease-in-out',
+  '&:hover': {
+    backgroundColor: '#84A9AC',
+  },
+}));
+
 
 export const Register = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate()
+  const [leftOpen, setLeftOpen] = useState(false);
+  const [rightOpen, setRightOpen] = useState(false);
 
+  const handleLeftPaperClick = () => {
+    setLeftOpen(!leftOpen);
+    setRightOpen(false);
+  };
+
+  const handleRightPaperClick = () => {
+    setRightOpen(!rightOpen);
+    setLeftOpen(false);
+  };
 
   return (
-    <form
-      onSubmit={(e) => [
-        e.preventDefault(),
-        signUp(firstName, lastName, email, password),
-        setEmail(""),
-        setPassword(""),
-        setFirstName(""),
-        setLastName(""),
-        navigate("/login")
-      ]}
-      style={{ display: "flex", flexDirection: "column" }}
-        >
-        <h3>Register</h3>
-        <input
-            placeholder="first name"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            className="input-field"
-        />
-        <input
-            placeholder="last name"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            className="input-field"
-        />
-        <input
-            placeholder="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="input-field"
-        />
-        <input
-            placeholder="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="input-field"
-        />
-        <input type="submit" value="Submit!" className="nav-button"/>
-    </form>
+    <div>
+      <div className="registration-page">
+        <div className="registration-page-welcome">
+          <h2>Register</h2>
+        </div>
+          <div className="registration-selection"> 
+          <CustomPaper 
+            elevation={3}
+            onClick={handleLeftPaperClick} >
+            <div className="volunteer-selector">
+              <img src={volunteer} />
+              <h2>Volunteer</h2>
+            </div>
+          </CustomPaper>
+          <CustomPaper 
+            elevation={3}
+            onClick={handleRightPaperClick}>
+            <div  className="coordinator-selector">
+              <img src={organization} />
+              <h2>Organization</h2>
+            </div>
+          </CustomPaper> 
+        </div>
+      </div>
+      <div className="register-forms">
+        {leftOpen && <VolunteerRegister/>
+        }
+        {rightOpen && <OrgRegister/>}
+      </div>
+    </div>
   );
 };

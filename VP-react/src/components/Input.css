@@ -26,4 +26,9 @@
 .password-input-div{
     display: flex;
     flex-direction: row;
+    width:120%;
+}
+
+.password-field{
+    width:70%;
 }
