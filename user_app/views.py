@@ -60,7 +60,8 @@ def user_log_in(request):
             print(user)
             return JsonResponse({
                 'email': user.email,
-                'name': f"{user.first_name} {user.last_name}"})
+                'name': f"{user.first_name} {user.last_name}",
+                'isCoordinator': user.is_coordinator})
         except Exception as e:
             print(e)
             return JsonResponse({'login': False})

@@ -10,6 +10,7 @@ import CalendarDate from "./components/CalendarDate";
 import { CheckInPage } from "./components/CheckInPage";
 import EventCreationPage from "./components/EventCreationPage";
 import EventOrganizerDashboard from "./components/EventOrganizerDashboard";
+import Profile from "./components/Profile";
 
 
 
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
                 path: "organizer/dashboard",
                 element: <EventOrganizerDashboard />,
             },
+            {
+                path: "user/profile",
+                element: <Profile/>
+            }
         ],
     },
 ]);
