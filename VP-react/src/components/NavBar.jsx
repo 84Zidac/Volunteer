@@ -37,6 +37,9 @@ export const NavBar = ()=> {
                             <div className="inner-right-buttons">
                                 <h1>Hello {user.name.toUpperCase()}</h1>
                                 <Link to="/">
+                                    <button className="nav-button">Home</button>
+                                </Link>
+                                <Link to="/">
                                     <button className="nav-button" onClick={handleLogout}>LOG OUT</button>
                                 </Link>
                                 <Link to="/user/dashboard">
@@ -51,6 +54,9 @@ export const NavBar = ()=> {
                             </div>
                         ) : (
                             <div className="inner-right-buttons">
+                                <Link to="/">
+                                    <button className="nav-button">Home</button>
+                                </Link>
                                 <Link to="/register">
                                         <button className="nav-button">Register</button>
                                 </Link>
