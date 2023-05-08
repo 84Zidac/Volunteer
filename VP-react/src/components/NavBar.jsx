@@ -1,11 +1,12 @@
 // /Users/alexandermills/Documents/personal_projects/VolunteerPlanner/VP-react/src/components/NavBar.jsx
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { logOut } from "../utilities";
 import { UserContext } from "../App";
 import { useContext } from 'react';
 import "./Button.css";
 import { AppBar } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Avatar from '@mui/material/Avatar';
 
 const theme = createTheme({
     palette: {
@@ -15,11 +16,27 @@ const theme = createTheme({
     },
   });
 
+function stringAvatar(name) {
+    return {
+      sx: {
+        bgcolor: '#f3e5ab',
+        width: 56, 
+        height: 56,
+        color: '#204051',
+        fontWeight: 'bold',
+        '&:hover': {
+            backgroundColor: '#84A9AC',
+          },
+      },
+      children: `${name.split(' ')[0][0].toUpperCase()}${name.split(' ')[1][0].toUpperCase()}`,
+    };
+  }
+
 
 export const NavBar = ()=> {
 
     const { user, setUser } = useContext(UserContext);
-
+    const navigate = useNavigate()
     const handleLogout = () => {
         logOut(setUser);
     };
@@ -35,7 +52,7 @@ export const NavBar = ()=> {
                         {user && user.name ? (
 
                             <div className="inner-right-buttons">
-                                <h1>Hello {user.name.toUpperCase()}</h1>
+                                {/* <h1>Hello {user.name.toUpperCase()}</h1> */}
                                 <Link to="/">
                                     <button className="nav-button">Home</button>
                                 </Link>
@@ -51,6 +68,7 @@ export const NavBar = ()=> {
                                 <Link to="/checkin">
                                     <button className="nav-button">Check In</button>
                                 </Link>
+                                <Avatar {...stringAvatar(user.name)} onClick={(e)=> navigate('user/profile')}/>
                             </div>
                         ) : (
                             <div className="inner-right-buttons">
