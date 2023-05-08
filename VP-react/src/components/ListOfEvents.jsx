@@ -32,7 +32,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 
-export default function ListOfEventsTable({ user }) {
+export default function ListOfEventsTable({ user, onDateClick }) {
     const [volunteers, setVolunteers] = useState([])
 
   useEffect(() => {
@@ -56,6 +56,14 @@ export default function ListOfEventsTable({ user }) {
 
   }, [user])
 
+  const handleDateClick= (dateTime) => {
+    const dateObject = new Date(dateTime)
+    const dateOnly = `${dateObject.getFullYear()}-${String(dateObject.getMonth() + 1).padStart(2, '0')}-${String(dateObject.getDate()).padStart(2, '0')}`;
+    if (onDateClick) {
+      onDateClick(dateOnly)
+    }
+  };
+
   return (
     <TableContainer component={Paper} sx={{ minWidth: 300, maxWidth: 1000 }}>
       <Table sx={{ minWidth: 300 , maxWidth: 1000 }} aria-label="customized table">
@@ -69,7 +77,10 @@ export default function ListOfEventsTable({ user }) {
         </TableHead>
         <TableBody>
         {volunteers.map((row) => (
-            <StyledTableRow key={row.id}>
+            <StyledTableRow 
+            key={row.id}
+            onClick={() => handleDateClick(row.start_time)}
+            >
               <StyledTableCell component="th" scope="row">{row.event_name}</StyledTableCell>
               <StyledTableCell align="right">{row.event_name}</StyledTableCell>
               <StyledTableCell align="right">{row.start_time}</StyledTableCell>
