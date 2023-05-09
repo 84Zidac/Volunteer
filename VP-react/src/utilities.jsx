@@ -112,3 +112,12 @@ export const createEvent = async (
     return response.data.success;
   };
   
+  export async function getVolunteersList(date) {
+    try {
+      const response = await axios.get(`/volunteers_list/${date}/`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
+  }

@@ -6,14 +6,22 @@ import "./Input.css";
 // import IconButton from '@mui/material/IconButton';
 // import {VisibilityOff as VisibilityOffIcon} from '@mui/icons-material';
 // import { createTheme, ThemeProvider } from '@mui/material/styles';
-import DataTable from './CheckInForm'
-
+import VolunteersList from './VolunteersList'
+import ListOfEventsTable from './ListOfEvents'
+import { useState } from 'react';
 
 export const CheckInPage = () => {
+    const [selectedDate, setSelectedDate] = useState(null)
+
+    const handleDateClick = (date) => {
+        setSelectedDate(date);
+    }
+
     return (
         <>
         <h1>Check in Volunteers Now</h1>
-        <DataTable />
+        <ListOfEventsTable onDateClick={handleDateClick} />
+        <VolunteersList selectedDate={selectedDate} />
         </>
         
 

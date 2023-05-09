@@ -1,5 +1,23 @@
 import * as React from 'react';
 import  {DataGrid}  from '@mui/x-data-grid';
+import { getVolunteersList } from '../utilities'
+import { useState, useEffect } from 'react';
+
+export default function VolunteersList ({ selectedDate }) {
+  const [volunteers, setVolunteers] = useState([]);
+
+  useEffect(() => {
+    const fetchVolunteers = async () => {
+      if (selectedDate) {
+        const volunteerData = await getVolunteersList(selectedDate);
+        if (volunteerData && volunteerData.volunteers) {
+          setVolunteers(volunteerData.volunteers)
+        }
+      }
+      
+    }
+    fetchVolunteers();
+  }, [selectedDate]);
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -17,16 +35,13 @@ const columns = [
   },
 ];
 
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon'  },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei'  },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime' },
-  { id: 4, lastName: 'Stark', firstName: 'Arya' },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys'},
-  { id: 6, lastName: 'Drogo', firstName: 'Khal'},
-];
+const rows = volunteers.map((volunteer) => ({
+    id: volunteer.id, 
+    firstName: volunteer.name.split(' ')[0],
+    lastName: volunteer.name.split(' ')[1], 
+  }))
 
-export default function DataTable() {
+
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
