@@ -2,8 +2,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createEvent } from "../utilities"; 
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
+import { useLoadScript, useJsApiLoader } from "@react-google-maps/api";
 import "./Button.css";
 import "./Input.css";
+
+const libraries = ["places"];
 
 // export default function EventCreationPage = () => {
 export default function EventCreationPage() {
@@ -13,14 +17,17 @@ export default function EventCreationPage() {
   const [description, setDescription] = useState("");
   const [volunteersRequired, setVolunteersRequired] = useState("");
   const [protectiveEquipment, setProtectiveEquipment] = useState("");
-  const [street, setStreet] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [zipcode, setZipcode] = useState("");
+  const [streetAddress, setStreetAddress] = useState("");
   const [organization, setOrganization] = useState("BBB");
 
   // setOrganization
   const navigate = useNavigate();
+
+  // Google Address API
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: "AIzaSyBPOv4E9erS7mWYHQXo7Kb58yCiUQcT0X4",
+    libraries,
+  });
   
   return (
     <div>
@@ -36,10 +43,7 @@ export default function EventCreationPage() {
             description,
             volunteersRequired,
             protectiveEquipment,
-            street,
-            city,
-            state,
-            zipcode,
+            streetAddress,
             organization
           );
           console.log("startTime:", startTime); 
@@ -48,10 +52,7 @@ export default function EventCreationPage() {
           console.log("description:", description); 
           console.log("volunteersRequired:", volunteersRequired); 
           console.log("protectiveEquipment:", protectiveEquipment); 
-          console.log("street:", street); 
-          console.log("city:", city); 
-          console.log("state:", state); 
-          console.log("zipcode:", zipcode); 
+          console.log("streetAddress:", streetAddress); 
           console.log("organization:", organization)
           setEventName("");
           setStartTime("");
@@ -59,11 +60,8 @@ export default function EventCreationPage() {
           setDescription("");
           setVolunteersRequired("");
           setProtectiveEquipment("");
-          setStreet("");
-          setCity("");
-          setState("");
-          setZipcode("");
-          setOrganization("");
+          setStreetAddress("");
+
           navigate("/organizer/dashboard");
         }}
       style={{ display: "flex", flexDirection: "column" }}>
@@ -135,49 +133,25 @@ export default function EventCreationPage() {
           onChange={(e) => setProtectiveEquipment(e.target.value)}
         ></textarea>
 
-        <input
-          type="text"
-          id="street"
-          name="street"
-          placeholder="Street"
-          required
-          className="input-field"
-          value={street}
-          onChange={(e) => setStreet(e.target.value)}
-        />
-
-        <input
-          type="text"
-          id="city"
-          name="city"
-          placeholder="City"
-          required
-          className="input-field"
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-        />
-
-        <input
-          type="text"
-          id="state"
-          name="state"
-          placeholder="State"
-          required
-          className="input-field"
-          value={state}
-          onChange={(e) => setState(e.target.value)}
-        />
-
-        <input
-          type="text"
-          id="zipcode"
-          name="zipcode"
-          placeholder="Zip Code"
-          required
-          className="input-field"
-          value={zipcode}
-          onChange={(e) => setZipcode(e.target.value)}
-        />
+        <div>
+          <GooglePlacesAutocomplete
+            selectProps={{
+              value: streetAddress,
+              onChange: setStreetAddress,
+            }}
+            >
+            <input
+              type="text"
+              id="street_address"
+              name="street_address"
+              placeholder="Street Address"
+              required
+              className="input-field"
+              // value={streetAddress}
+              // onChange={(e) => setStreetAddress(e.target.value)}
+            />
+          </GooglePlacesAutocomplete>
+        </div>
         
         <input
           type="text"
