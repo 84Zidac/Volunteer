@@ -12,4 +12,4 @@ class Organization(models.Model):
     website = models.TextField(blank=False, null=False)
     contact_email = models.EmailField(blank=False, null=False, unique=True)
     phone_number = models.CharField(max_length=12)
-    organizer_id = models.ForeignKey(App_User, on_delete=models.CASCADE)
+    organizer = models.ForeignKey(App_User, on_delete=models.CASCADE)

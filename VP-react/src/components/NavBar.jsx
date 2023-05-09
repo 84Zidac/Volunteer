@@ -49,8 +49,23 @@ export const NavBar = ()=> {
                         <h1>VolunteerCompass</h1>
                     </div>
                     <div className="right-buttons">
-                        {user && user.name ? (
-
+                        {user && user.name && user.isCoordinator ? (
+                            <div className="inner-right-buttons">
+                                <Link to="/">
+                                    <button className="nav-button">Home</button>
+                                </Link>
+                                <Link to="/">
+                                    <button className="nav-button" onClick={handleLogout}>LOG OUT</button>
+                                </Link>
+                                <Link to="/event-creation">
+                                    <button className="nav-button">Event Creation Page</button>
+                                </Link>
+                                <Link to="/checkin">
+                                    <button className="nav-button">Check In</button>
+                                </Link>
+                                <Avatar {...stringAvatar(user.name)} onClick={(e)=> navigate('user/profile')}/>
+                            </div>
+                            ) : user && user.name ? (
                             <div className="inner-right-buttons">
                                 {/* <h1>Hello {user.name.toUpperCase()}</h1> */}
                                 <Link to="/">
@@ -61,12 +76,6 @@ export const NavBar = ()=> {
                                 </Link>
                                 <Link to="/user/dashboard">
                                     <button className="nav-button">Dashboard</button>
-                                </Link>
-                                <Link to="/user/dashboard">
-                                    <button className="nav-button">Dashboard</button>
-                                </Link>
-                                <Link to="/checkin">
-                                    <button className="nav-button">Check In</button>
                                 </Link>
                                 <Avatar {...stringAvatar(user.name)} onClick={(e)=> navigate('user/profile')}/>
                             </div>
@@ -80,9 +89,6 @@ export const NavBar = ()=> {
                                 </Link>
                                 <Link to="/login/">
                                         <button className="nav-button">Login</button>
-                                </Link>
-                                <Link to="/event-creation">
-                                    <button className="nav-button">Event Creation Page</button>
                                 </Link>
                             </div>
                         )}

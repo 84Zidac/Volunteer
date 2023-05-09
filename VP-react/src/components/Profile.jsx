@@ -1,16 +1,18 @@
-import { useContext } from "react";
-import {UserContext} from "../App";
+import { useContext} from "react";
+import {UserContext, OrgContext} from "../App";
 import {Typography} from '@mui/material';
 import "./Profile.css"
 
+
 export default function Profile(){
   const {user} = useContext(UserContext)
+  const {organization} = useContext(OrgContext)
 
   const capitalized = (name) =>{
       let nameLower = name.toLowerCase().split(' ') 
        return nameLower.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
   }
-
+  
   return (
             <div className="profile-div">
               <Typography variant="h6" gutterBottom>
@@ -25,19 +27,19 @@ export default function Profile(){
                 Organization Details
                 </Typography>
                 <Typography variant="h6" gutterBottom>
-                  Name: 
+                  Name: {organization.organization_name}
                 </Typography>
                 <Typography variant="h6" gutterBottom>
-                  Description:
+                  Description: {organization.description}
                 </Typography>
                 <Typography variant="h6" gutterBottom>
-                  Website:
+                  Website: {organization.website}
                 </Typography>
                 <Typography variant="h6" gutterBottom>
-                  Phone number:
+                  Phone number:{organization.phone_number}
                 </Typography>              
                 <Typography variant="h6" gutterBottom>
-                  Email: 
+                  Email: {organization.contact_email}
                 </Typography>
                 </div>
               ): (
