@@ -88,10 +88,8 @@ export const createEvent = async (
     description,
     volunteersRequired,
     protectiveEquipment,
-    street,
-    city,
-    state,
-    zipcode,
+    streetAddress,
+
     organization
   ) => {
     let response = await axios.post('/event-creation/', {
@@ -101,10 +99,7 @@ export const createEvent = async (
       description: description,
       volunteers_required: volunteersRequired,
       protective_equipment: protectiveEquipment,
-      street: street,
-      city: city,
-      state: state,
-      zipcode: zipcode,
+      street_address: streetAddress.label,
       organization: organization,
     });
   
