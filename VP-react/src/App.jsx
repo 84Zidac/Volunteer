@@ -128,16 +128,18 @@
 
 import { createContext, useEffect, useState } from "react";
 import "./App.css";
-import { currUser, logOut } from "./utilities"; 
+import { currUser, logOut, getOrganization } from "./utilities"; 
 import { getToken } from "./components/CsrfToken";
 import { Outlet } from "react-router-dom";
 import { NavBar } from "./components/NavBar";
 import Footer from "./components/Footer";
 
 export const UserContext = createContext(null);
+export const OrgContext = createContext(null);
 
 function App() {
   const [user, setUser] = useState(null);
+  const [organization, setOrganization] = useState(null);
 
   getToken();
 
@@ -148,14 +150,26 @@ function App() {
     getCurrUser();
   }, []);
 
+  useEffect(()=>
+  {    
+    if (user && user.isCoordinator) {
+      const getOrg = async () => {
+        setOrganization (await getOrganization(user.email))
+       }
+       getOrg()
+      }
+      }, [user])
+
   return (
     <div className="App">
       <UserContext.Provider value={{ user, setUser }}>
+      <OrgContext.Provider value={{ organization, setOrganization }}>
         <NavBar />
         {/* <h1>Hello {user && user.name && user.name.toUpperCase()}</h1> */}
           <div className='main'>
               <Outlet />
           </div>
+      </OrgContext.Provider>
       </UserContext.Provider>
       <Footer/>
     </div>

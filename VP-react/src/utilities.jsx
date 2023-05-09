@@ -120,4 +120,11 @@ export const createEvent = async (
       console.log(error);
       return [];
     }
+}
+
+  export const getOrganization = async(email) => {
+    let response = await axios.post('/organization/', {
+        'email' : email
+    })
+    return response.data.organization
   }
