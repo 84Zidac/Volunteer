@@ -17,7 +17,6 @@ export default function HomePage() {
     fetchData();
   }, []);
 
-
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: "AIzaSyBPOv4E9erS7mWYHQXo7Kb58yCiUQcT0X4",
     libraries,

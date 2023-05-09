@@ -132,7 +132,7 @@ export default function Map({ events }) {
             onLoad={(marker) => {
               // Geocode the address to get its latitude and longitude
               const geocoder = new window.google.maps.Geocoder();
-              let address = `${event.address.street}, ${event.address.city}, ${event.address.state} ${event.address.zip}`
+              let address = `${event.address}`
               geocoder.geocode({ address }, (results, status) => {
                 if (status === "OK") {
                   marker.setPosition(results[0].geometry.location);
