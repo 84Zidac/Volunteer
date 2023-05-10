@@ -58,7 +58,7 @@
       "website": "https://www.savethechildren.org/",
       "contact_email": "info@savethechildren.org",
       "phone_number": "555-123-4567",
-      "organizer_id": 11
+      "organizer": 11
     }
   },
   {
@@ -70,7 +70,7 @@
       "website": "https://www.redcross.org/",
       "contact_email": "info@redcross.org",
       "phone_number": "555-234-5678",
-      "organizer_id": 12
+      "organizer": 12
     }
   },
   {
@@ -82,7 +82,7 @@
       "website": "https://www.habitat.org/",
       "contact_email": "info@habitat.org",
       "phone_number": "555-345-6789",
-      "organizer_id": 13
+      "organizer": 13
     }
   },
   {
@@ -94,7 +94,7 @@
       "website": "https://www.feedingamerica.org/",
       "contact_email": "info@feedingamerica.org",
       "phone_number": "555-456-7890",
-      "organizer_id": 14
+      "organizer": 14
     }
   },
   {
@@ -106,59 +106,10 @@
       "website": "https://www.doctorswithoutborders.org/",
       "contact_email": "info@doctorswithoutborders.org",
       "phone_number": "555-567-8901",
-      "organizer_id": 15
+      "organizer": 15
     }
   },
-  {
-    "model": "event_app.address",
-    "pk": 11,
-    "fields": {
-      "street": "1600 Pennsylvania Avenue NW",
-      "city": "Washington",
-      "state": "DC",
-      "zipcode": "20500"
-    }
-  },
-  {
-    "model": "event_app.address",
-    "pk": 12,
-    "fields": {
-      "street": "1060 West Addison Street",
-      "city": "Chicago",
-      "state": "IL",
-      "zipcode": "60613"
-    }
-  },
-  {
-    "model": "event_app.address",
-    "pk": 13,
-    "fields": {
-      "street": "1400 Constitution Ave NW",
-      "city": "Washington",
-      "state": "DC",
-      "zipcode": "20560"
-    }
-  },
-  {
-    "model": "event_app.address",
-    "pk": 14,
-    "fields": {
-      "street": "200 East Colfax Avenue",
-      "city": "Denver",
-      "state": "CO",
-      "zipcode": "80203"
-    }
-  },
-  {
-    "model": "event_app.address",
-    "pk": 15,
-    "fields": {
-      "street": "1600 Exposition Blvd",
-      "city": "Los Angeles",
-      "state": "CA",
-      "zipcode": "90007"
-    }
-  },
+
   {
     "model": "event_app.event",
     "pk": 11,
@@ -167,9 +118,9 @@
       "start_time": "2023-06-10T09:00:00Z",
       "end_time": "2023-06-10T12:00:00Z",
       "description": "Join us for a charity walk to raise awareness and funds for local causes.",
-      "volunteers_reqired": 10,
+      "volunteers_required": 10,
       "protective_equipment": null,
-      "address": 11,
+      "street_address": "5535 State Route 258, Tippicanoe OH, 44699",
       "organization": 11
     }
   },
@@ -181,9 +132,9 @@
       "start_time": "2023-07-15T10:00:00Z",
       "end_time": "2023-07-15T14:00:00Z",
       "description": "Help us clean up the local park and surrounding streets. Gloves and bags will be provided.",
-      "volunteers_reqired": 20,
+      "volunteers_required": 20,
       "protective_equipment": "Gloves and bags provided.",
-      "address": 12,
+      "street_address": "104 Allen St, Cadiz OH, 43907",
       "organization": 12
     }
   },
@@ -195,9 +146,9 @@
       "start_time": "2023-11-18T09:00:00Z",
       "end_time": "2023-11-18T16:00:00Z",
       "description": "Join us in collecting canned and non-perishable food items for the local food bank.",
-      "volunteers_reqired": 15,
+      "volunteers_required": 15,
       "protective_equipment": null,
-      "address": 13,
+      "street_address": "Pittsburgh PA",
       "organization": 13
     }
   },
@@ -209,9 +160,9 @@
       "start_time": "2023-08-05T08:00:00Z",
       "end_time": "2023-08-05T13:00:00Z",
       "description": "Help us restore the natural habitat of a local wildlife sanctuary.",
-      "volunteers_reqired": 15,
+      "volunteers_required": 15,
       "protective_equipment": "Please wear long pants and sturdy shoes.",
-      "address": 14,
+      "street_address": "Las Vegas, Nv",
       "organization": 14
     }
   },
@@ -223,9 +174,9 @@
       "start_time": "2023-09-20T12:00:00Z",
       "end_time": "2023-09-20T18:00:00Z",
       "description": "Donate blood and save lives. Refreshments provided.",
-      "volunteers_reqired": 13,
+      "volunteers_required": 13,
       "protective_equipment": "Please wear a mask.",
-      "address": 15,
+      "street_address": "Chicago, Il",
       "organization": 15
     }
   },
