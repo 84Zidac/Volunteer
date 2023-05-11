@@ -25,7 +25,7 @@ export default function EventCreationPage() {
 
   // Google Address API
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyBPOv4E9erS7mWYHQXo7Kb58yCiUQcT0X4",
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_API_KEY,
     libraries,
   });
   
