@@ -22,6 +22,10 @@ urlpatterns = [
     path('user_volunteer_list/',
          views.get_user_volunteer_list,
          name='user_volunteer_list'),
+
+    path('checkin_volunteers/',
+         views.check_in_volunteers,
+         name='check_in_volunteers'),
 ]
 
 # * * * * * * * * * *

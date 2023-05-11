@@ -145,3 +145,13 @@ export const createEvent = async (
     setUser(response.data)
     return response.data
   }
+
+  export const checkInVolunteers = async (volunteerIds) => {
+    try {
+      const response = axios.put('/checkin_volunteers/', {volunteerIds})
+        return response.data
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  }

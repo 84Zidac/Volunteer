@@ -115,6 +115,19 @@ def get_user_volunteer_list(request):
         return JsonResponse({"error": str(e)})
 
 
+@api_view(["PUT"])
+@permission_classes([IsAuthenticated])
+def check_in_volunteers(request):
+    try:
+        volunteer_ids = request.data.get('volunteerIds', [])
+        volunteers = Volunteer_Registration.objects.filter(id__in=volunteer_ids)
+        for volunteer in volunteers:
+            volunteer.attendance = True
+            volunteer.save()
+            return JsonResponse({'status':'success'})
+    except Exception as e:
+        print(e)
+        return JsonResponse({'status': 'fail', 'message': 'Invalid request method'})
 
 # @csrf_exempt
 # @api_view(["POST"])

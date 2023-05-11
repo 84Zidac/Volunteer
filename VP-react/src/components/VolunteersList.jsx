@@ -1,11 +1,23 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState  } from 'react';
 import { useTable, useRowSelect } from 'react-table';
 import { getVolunteersList } from '../utilities';
 import Button from '@mui/material/Button';
-
+import { checkInVolunteers } from '../utilities'
 
 export default function VolunteersList({ selectedDate }) {
   const [volunteers, setVolunteers] = React.useState([]);
+  const [selectedVolunteers, setSelectedVolunteers] = useState([]);
+
+  const onSelectVolunteer = (volunteerId) => {
+    setSelectedVolunteers(prev => {
+      //Toggle selection
+      if (prev.includes(volunteerId)) {
+        return prev.filter(id => id !== volunteerId);
+      } else {
+        return [...prev, volunteerId];
+      }
+    })
+  }
 
   useEffect(() => {
     const fetchVolunteers = async () => {
@@ -32,7 +44,14 @@ export default function VolunteersList({ selectedDate }) {
       Header: ({ getToggleAllRowsSelectedProps }) => (
         <input type="checkbox" {...getToggleAllRowsSelectedProps()} />
       ),
-      Cell: ({ row }) => <input type="checkbox" {...row.getToggleRowSelectedProps()} />,
+      Cell: ({ row }) => (
+      <input 
+      type="checkbox"
+      {...row.getToggleRowSelectedProps()} 
+      onChange={() => onSelectVolunteer(row.original.id)}
+      checked={selectedVolunteers.includes(row.original.id)}
+      />
+      ),
     },
     {
       Header: 'ID',
@@ -50,7 +69,7 @@ export default function VolunteersList({ selectedDate }) {
       Header: 'Full Name',
       accessor: 'fullName',
     },
-  ], []);
+  ], [selectedVolunteers]);
 
   const {
     getTableProps,
@@ -85,7 +104,12 @@ export default function VolunteersList({ selectedDate }) {
         })}
       </tbody>
     </table>
-    <Button variant="contained">Checkin Volunteer</Button>
+    <Button 
+    variant="contained" 
+    onClick={() => checkInVolunteers(selectedVolunteers)}
+    >
+      Checkin Volunteer
+      </Button>
   </>
   );
 }
