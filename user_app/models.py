@@ -12,6 +12,7 @@ class App_User(AbstractUser):
     REQUIRED_FIELDS = []
     is_coordinator = models.BooleanField(default=False)
     is_assistant = models.BooleanField(default=False)
+    about_section = models.TextField(null=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} | {self.email}"

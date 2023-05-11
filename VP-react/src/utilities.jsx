@@ -123,3 +123,25 @@ export const createEvent = async (
     })
     return response.data.organization
   }
+
+  export const verifyPassword = async(password) => {
+    let response = await axios.post('/user/curruser/', {
+      "password": password
+    })
+    return response.data
+  }
+
+  export const editProfile = async (password) => {
+    let response = await axios.put('/user/curruser/', {
+      "password": password,
+    })
+    return response.data
+  }
+
+  export const saveAboutMe = async (aboutMe, setUser) => {
+    let response = await axios.put('/user/curruser/', {
+      "about_me": aboutMe,
+    })
+    setUser(response.data)
+    return response.data
+  }

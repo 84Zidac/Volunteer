@@ -2,9 +2,10 @@
 # from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 from rest_framework.decorators import api_view
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from .models import App_User
 from django.core.serializers import serialize
+from django.contrib.auth.hashers import check_password
 # from django.db.models import Sum
 # from datetime import datetime
 # from rest_framework.decorators import permission_classes
@@ -61,7 +62,8 @@ def user_log_in(request):
             return JsonResponse({
                 'email': user.email,
                 'name': f"{user.first_name} {user.last_name}",
-                'isCoordinator': user.is_coordinator})
+                'isCoordinator': user.is_coordinator,
+                'aboutMe': user.about_section})
         except Exception as e:
             print(e)
             return JsonResponse({'login': False})
@@ -81,9 +83,9 @@ def dashboard(request):
         return JsonResponse({"user": None})
 
 
-@api_view(["GET"])
+@api_view(["GET", "POST", "PUT"])
 def curr_user(request):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.method == "GET":
         #                    format       query                     options
         user_info = serialize(
             "json",
@@ -91,6 +93,36 @@ def curr_user(request):
             fields=['name', 'email'])
         user_info_workable = json.loads(user_info)
         return JsonResponse(user_info_workable[0]['fields'])
+    elif request.user.is_authenticated and request.method == "POST":
+        user = App_User.objects.get(id = request.user.id)
+        password_verification = check_password(request.data['password'], user.password)
+        if password_verification == True:
+            return JsonResponse({'password': True})
+        else:
+            return JsonResponse({'password':False})
+    elif request.user.is_authenticated and request.method == "PUT":
+        if 'password' in request.data:
+            try:
+                user = App_User.objects.get(id = request.user.id)
+                user.set_password(request.data['password'])
+                user.save()
+                update_session_auth_hash(request, user)
+                return JsonResponse({'sucess': True})
+            except:
+                return JsonResponse({'sucess': False})
+        elif 'about_me' in request.data:
+            try:
+                user = App_User.objects.get(id = request.user.id)
+                user.about_section = request.data['about_me']
+                user.save()
+                return JsonResponse({
+                'email': user.email,
+                'name': f"{user.first_name} {user.last_name}",
+                'isCoordinator': user.is_coordinator,
+                'aboutMe': user.about_section})
+            except:
+                return JsonResponse({'sucess': False})
+
     else:
         return JsonResponse({"user": None})
 

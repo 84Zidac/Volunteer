@@ -63,6 +63,7 @@ export const Register = () => {
         {leftOpen && <VolunteerRegister/>
         }
         {rightOpen && <OrgRegister/>}
+        <a href="https://www.flaticon.com/authors/freepik" title="flaticon icons" style={{ fontSize: '10px', color: '#204051' }}>Icons created by Freepik - Flaticon</a>
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     path('register/', views.user_sign_up, name='register'),
     path('user/login/', views.user_log_in, name='signin'),
+    path('user/profile', views.curr_user, name='curruser'),
     path('user/curruser/', views.curr_user, name='curruser'),
     path('user/logout/', views.user_log_out, name='signout'),
     path('api/get_weather_data/<str:date>/',
