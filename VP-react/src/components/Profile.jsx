@@ -74,7 +74,6 @@ export default function Profile(){
     saveAboutMe(aboutMe, setUser)
   }
 
-  
   return (
           <div className="profile-main">
             <Box
@@ -124,6 +123,7 @@ export default function Profile(){
                   <Typography variant="h6" gutterBottom>
                     About me:
                   </Typography>
+                  <div className="input-about-me">
                   <TextField
                     value={aboutMe}
                     variant="outlined"
@@ -138,8 +138,9 @@ export default function Profile(){
                       style: {
                         color: '#204051',
                         borderColor: '#204051',
-                      },
-                      endAdornment:(
+                      },     
+                    }}
+                  />
                         <div>
                           {editDisabled ? (
                             <IconButton onClick={handleEditButtonClick}>
@@ -148,9 +149,8 @@ export default function Profile(){
                           ): ( <IconButton onClick={handleSaveButtonClick}>
                             <Save />
                           </IconButton>)}
-                        </div>)              
-                    }}
-                  />
+                        </div>
+                      </div>
                   </div>
                   )} 
                     {save  && (
