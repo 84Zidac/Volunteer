@@ -3,3 +3,38 @@
   align-items: flex-start;
   flex-direction: column;
 }
+
+.profile-main {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-image{
+  display: flex;
+  margin-right: 5%;
+  flex-direction: column;
+}
+
+.change-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color: #3B6978;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  margin-top: 2em;
+}
+
+.change-button:hover {
+  background-color: #fff;
+  color: #84A9AC;
+}
+
+.input-about-me{
+  display: flex;
+  flex-direction: row;
+}
