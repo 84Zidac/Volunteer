@@ -117,14 +117,15 @@ def get_user_volunteer_list(request):
 
 @api_view(["PUT"])
 @permission_classes([IsAuthenticated])
-def check_in_volunteers(request):
+def volunteer_attendance(request):
     try:
         volunteer_ids = request.data.get('volunteerIds', [])
+        attendance_status = request.data.get('isPresent')
         volunteers = Volunteer_Registration.objects.filter(id__in=volunteer_ids)
         for volunteer in volunteers:
-            volunteer.attendance = True
+            volunteer.attendance = attendance_status
             volunteer.save()
-            return JsonResponse({'status':'success'})
+        return JsonResponse({'status':'success'})
     except Exception as e:
         print(e)
         return JsonResponse({'status': 'fail', 'message': 'Invalid request method'})

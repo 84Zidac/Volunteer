@@ -23,9 +23,9 @@ urlpatterns = [
          views.get_user_volunteer_list,
          name='user_volunteer_list'),
 
-    path('checkin_volunteers/',
-         views.check_in_volunteers,
-         name='check_in_volunteers'),
+    path('volunteer_attendance/',
+         views.volunteer_attendance,
+         name='volunteer_attendance'),
 ]
 
 # * * * * * * * * * *

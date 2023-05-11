@@ -2,11 +2,29 @@ import React, { useEffect, useMemo, useState  } from 'react';
 import { useTable, useRowSelect } from 'react-table';
 import { getVolunteersList } from '../utilities';
 import Button from '@mui/material/Button';
-import { checkInVolunteers } from '../utilities'
+import { volunteersAccounted } from '../utilities'
 
 export default function VolunteersList({ selectedDate }) {
   const [volunteers, setVolunteers] = React.useState([]);
   const [selectedVolunteers, setSelectedVolunteers] = useState([]);
+
+  const handleCheckIn = async () => {
+    const response = await volunteersAccounted(selectedVolunteers, true);
+    if (response.status === 'success') {
+      console.log(handleCheckIn, 'successfully updated')
+    }else{
+      console.log(handleCheckIn, 'no updates made')
+    }
+  }
+
+  const handleNoShow = async () => {
+    const response = await volunteersAccounted(selectedVolunteers, false);
+    if (response.status === 'success') {
+      console.log(handleNoShow, 'successfully updated')
+    }else{
+      console.log(handleNoShow, 'no updates made')
+    }
+  }
 
   const onSelectVolunteer = (volunteerId) => {
     setSelectedVolunteers(prev => {
@@ -106,10 +124,30 @@ export default function VolunteersList({ selectedDate }) {
     </table>
     <Button 
     variant="contained" 
-    onClick={() => checkInVolunteers(selectedVolunteers)}
+    onClick={handleCheckIn}
     >
       Checkin Volunteer
+      </Button>
+      <Button 
+    variant="contained" 
+    onClick={handleNoShow}
+    >
+      No Show
       </Button>
   </>
   );
 }
+
+{/* <Button 
+    variant="contained" 
+    onClick={() => handleCheckIn(selectedVolunteers)}
+    >
+      Checkin Volunteer
+      </Button>
+      <Button 
+    variant="contained" 
+    onClick={() => handleNoShow(selectedVolunteers)}
+    >
+      No Show
+      </Button>
+  </> */}
