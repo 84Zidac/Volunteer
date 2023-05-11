@@ -63,8 +63,8 @@ export default function HomePage() {
         }}
       />
       <div style={{ marginTop: "700px" }}>
-        <h1 style={{ fontFamily: "cursive" }}>Welcome</h1>
-        <h2>Find Events Near You</h2>
+        <h1 style={{ fontFamily: "cursive", color: '#204051', fontSize: '3.5em', marginBottom:'0' }}>Welcome</h1>
+        <h2 style={{ fontFamily: "cursive", color: '#204051', fontSize: '1.5em' }}>Find Events Near You</h2>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <Map events={allEvents} />
         </div>
