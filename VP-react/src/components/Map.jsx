@@ -1,6 +1,9 @@
 // Import necessary dependencies from React and react-google-maps
 import React from "react";
 import { GoogleMap, Marker, InfoWindow, Circle } from "@react-google-maps/api";
+import './Button.css'
+import './Input.css'
+import { Select, MenuItem } from '@mui/material';
 
 // Define the Map component and receive the addresses prop
 export default function Map({ events }) {
@@ -80,27 +83,28 @@ export default function Map({ events }) {
   // Return the GoogleMap component with the necessary properties and children components
   return (
     <div id="googleMap">
-      <div><button onClick={getUserLocation}>My Location</button></div>
-<div className="zipcode-form">
-  {/* Display a label and input field to allow the user to enter a zip code */}
-  <label htmlFor="zipCode">Search Location:</label>
-  <input type="text" id="zipCode" name="zipCode" onChange={(e) => setZipCode(e.target.value)} />
-  <button onClick={geocodeZipCode}>Submit</button>
-</div>
+      <div><button className="nav-button" onClick={getUserLocation} style={{marginBottom: '1em'}}>My Location</button></div>
+        <div className="zipcode-form">
+          {/* Display a label and input field to allow the user to enter a zip code */}
+          <label htmlFor="zipCode" style = {{ color: '#204051', fontWeight: 'bold', fontSize: '1.2em', marginRight: '1em'}}>Search by ZIP:</label>
+          <input className="input-field" type="text" id="zipCode" name="zipCode" onChange={(e) => setZipCode(e.target.value)} style={{marginBottom: '1.5em', width: '40%'}}/>
+          <button className="nav-button" onClick={geocodeZipCode}>Submit</button>
+        </div>
       <div className="distance-select">
         {/* Display a label and select box to allow the user to choose the circle distance */}
-        <label htmlFor="distance">Circle Distance:</label>
-        <select
+        <label htmlFor="distance" style = {{ color: '#204051', marginRight: '1em', fontWeight: 'bold', fontSize: '1.2em'}}>Circle Distance:</label>
+        <Select
           id="distance"
           name="distance"
           value={circleDistance}
           onChange={handleCircleDistanceChange}
+          style={{marginBottom: '1em', color: '#204051'}}
         >
-          <option value={5}>5 miles</option>
-          <option value={10}>10 miles</option>
-          <option value={20}>20 miles</option>
-          <option value={50}>50 miles</option>
-        </select>
+          <MenuItem value={5} style={{color: '#204051'}}>5 miles</MenuItem>
+          <MenuItem value={10} style={{color: '#204051'}}>10 miles</MenuItem>
+          <MenuItem value={20} style={{color: '#204051'}}>20 miles</MenuItem>
+          <MenuItem value={50} style={{color: '#204051'}}>50 miles</MenuItem>
+        </Select>
       </div>
       {/* Render the GoogleMap component with the necessary properties */}
       <GoogleMap
