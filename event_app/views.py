@@ -47,9 +47,9 @@ def event_creation(request):
     protective_equipment = data.get('protective_equipment')
     street_address = data.get('street_address')
     # * * * * * * * * * * * * * * * *
-    organization_name = data.get('organization')
     try:
-        organization = Organization.objects.get(organization_name=organization_name)
+        organization = Organization.objects.get(organizer = request.user.id)
+        print(organization)
     except Organization.DoesNotExist:
         return JsonResponse({'success': False, 'error': 'Organization not found'})
 
