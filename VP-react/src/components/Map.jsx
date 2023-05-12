@@ -1,5 +1,6 @@
 // Import necessary dependencies from React and react-google-maps
 import React from "react";
+import {UserContext, OrgContext} from "../App";
 import { GoogleMap, Marker, InfoWindow, Circle } from "@react-google-maps/api";
 import './Button.css'
 import './Input.css'
@@ -8,6 +9,7 @@ import { Select, MenuItem } from '@mui/material';
 // Define the Map component and receive the addresses prop
 export default function Map({ events }) {
   // Declare state variables to store activeMarker, userLocation, and circleDistance
+  const {user, setUser} = React.useContext(UserContext)
   const [activeMarker, setActiveMarker] = React.useState(null);
   const [userLocation, setUserLocation] = React.useState(null);
   const [circleDistance, setCircleDistance] = React.useState(5);
@@ -73,7 +75,27 @@ export default function Map({ events }) {
     // Set the circleDistance state variable to the selected distance value
     setCircleDistance(parseInt(event.target.value));
   }
-  
+  function convertTimeAndDate(datetimeString){
+    const datetime = new Date(datetimeString);
+
+const formattedDate = datetime.toLocaleDateString(undefined, {
+  year: "numeric",
+  month: "long",
+  day: "numeric"
+});
+
+const formattedTime = datetime.toLocaleString(undefined, {
+  hour: "numeric",
+  minute: "numeric",
+  second: "numeric"
+}
+);
+console.log(`User check: ${JSON.stringify(user)}`);
+// console.log(user.email)
+return (
+`${formattedDate}, @ ${formattedTime}`
+)
+  }
 
   // If the userLocation state variable is not set, display a message asking the user to enable geolocation
   if (!userLocation) {
@@ -155,8 +177,10 @@ export default function Map({ events }) {
                 <>
                 <div className="eventDetails"><b>{`${event.organization}`}</b></div>
                 <div className="eventDetails"> {`${event.description}`} </div>
-                <div className="eventDetails">{`When: ${event.start_time}`}</div>
-                <div className="eventDetails">{`${event.address.street}, ${event.address.city}, ${event.address.state} ${event.address.zip}`}</div>
+                <div className="eventDetails">{`Start: ${convertTimeAndDate(event.start_time)}`}</div>
+                <div className="eventDetails">{`End: ${convertTimeAndDate(event.end_time)}`}</div>
+                <div className="eventDetails">{`${event.address}`}</div>
+                {user && user.name ? (<button>Sign Up</button>): <div></div>}
                 </>
               </InfoWindow>
             )}
