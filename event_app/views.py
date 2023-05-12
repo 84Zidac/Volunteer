@@ -12,7 +12,7 @@ from django.utils import timezone
 @api_view(['POST', 'PUT', 'GET'])
 def events_handler(request):
     if request.method == 'GET':
-        events = Event.objects.filter(start_time__gt=timezone.now())
+        events = Event.objects.filter(end_time__gt=timezone.now())
             # Build a list of dictionaries containing event information
         if not events.exists():
         # If there are no events, return a JSON response with an appropriate message
