@@ -145,3 +145,33 @@ export const createEvent = async (
     setUser(response.data)
     return response.data
   }
+
+// export const volunteersAccounted = async (volunteerIds, attendance) => {
+//   console.log('attendance before response in volunteersAccounted() utilities: ', attendance)
+//     const response = await fetch('/volunteer_attendance/', {
+//       method: 'PUT',
+//       headers: {
+//           'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify({
+//           volunteerIds: volunteerIds,
+//           attendance: attendance,
+//       }),
+//   });
+//   if (response.ok) {
+//       return response.json();
+//   } else {
+//       throw new Error('Error while updating attendance');
+//   }
+// }
+
+
+  export const volunteersAccounted = async (volunteerIds, isPresent) => {
+    try {
+      const response = await axios.put('/volunteer_attendance/', {volunteerIds, isPresent})
+        return response.data
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  }
