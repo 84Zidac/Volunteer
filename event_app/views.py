@@ -21,6 +21,7 @@ def events_handler(request):
         event_list = []
         for event in events:
             event_dict = {
+                'event_id': event.id,
                 'event_name': event.event_name,
                 'start_time': event.start_time.isoformat(),
                 'end_time': event.end_time.isoformat(),
@@ -86,3 +87,65 @@ def event_creation(request):
 @api_view(["GET"])
 def organizer_dashboard(request):
     pass
+
+
+@api_view(["GET"])
+def event_list_by_organization(request, organizationId):
+    print(request)
+    print(organizationId)
+    if request.method == 'GET':
+        events = Event.objects.filter(organization_id=organizationId)
+            # Build a list of dictionaries containing event information
+        print("$$$$$$$$$$")
+        print(events.query)
+        if not events.exists():
+        # If there are no events, return a JSON response with an appropriate message
+            return JsonResponse({'message': 'No events found',
+                                 'success': False})
+        event_list = []
+        for event in events:
+            event_dict = {
+                'event_id': event.id,
+                'event_name': event.event_name,
+                'start_time': event.start_time.isoformat(),
+                'end_time': event.end_time.isoformat(),
+                'description': event.description,
+                'volunteers_required': event.volunteers_required,
+                'protective_equipment': event.protective_equipment,
+                'address': event.street_address,
+                'organization': event.organization.organization_name
+            }
+            event_list.append(event_dict)
+
+        # Return the event list as a JSON response
+        return JsonResponse({'events': event_list,
+                             'success': True})
+
+
+@api_view(["GET"])
+def get_organization_events(request):
+    print(request.data['organizationId'])
+    if request.method == 'GET':
+        events = Event.objects.filter(start_time__gt=timezone.now())
+            # Build a list of dictionaries containing event information
+        if not events.exists():
+        # If there are no events, return a JSON response with an appropriate message
+            return JsonResponse({'message': 'No events found',
+                                 'success': False})
+        event_list = []
+        for event in events:
+            event_dict = {
+                'event_name': event.event_name,
+                'start_time': event.start_time.isoformat(),
+                'end_time': event.end_time.isoformat(),
+                'description': event.description,
+                'volunteers_required': event.volunteers_required,
+                'protective_equipment': event.protective_equipment,
+                'address': event.street_address,
+                'organization': event.organization.organization_name
+            }
+            event_list.append(event_dict)
+
+        # Return the event list as a JSON response
+        return JsonResponse({'events': event_list,
+                             'success': True})

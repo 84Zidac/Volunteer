@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+// import { getVolunteersList } from '../utilities';
 import { getVolunteersList, volunteersAccounted } from '../utilities';
+import { getVolunteersByEventId } from '../utilities';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -11,7 +13,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 
-export default function VolunteersList({ selectedDate }) {
+export default function VolunteersList({ selectedEventId }) {
   const [volunteers, setVolunteers] = React.useState([]);
   const [selectedVolunteers, setSelectedVolunteers] = useState([]);
 
@@ -64,15 +66,15 @@ export default function VolunteersList({ selectedDate }) {
   }
   useEffect(() => {
     const fetchVolunteers = async () => {
-      if (selectedDate) {
-        const volunteerData = await getVolunteersList(selectedDate);
+      if (selectedEventId) {
+        const volunteerData = await getVolunteersByEventId(selectedEventId);
         if (volunteerData && volunteerData.volunteers) {
           setVolunteers(volunteerData.volunteers);
         }
       }
     };
     fetchVolunteers();
-  }, [selectedDate]);
+  }, [selectedEventId]);
 
   return (
     <TableContainer component={Paper} sx={{ minWidth: 300, maxWidth: 1000 }}>
