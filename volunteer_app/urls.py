@@ -26,6 +26,10 @@ urlpatterns = [
     path('volunteer_attendance/',
          views.volunteer_attendance,
          name='volunteer_attendance'),
+
+    path('volunteers_list_by_event_id/<str:eventId>/',
+         views.volunteers_list_by_event_id,
+         name='volunteers_list_by_event_id'),
 ]
 
 # * * * * * * * * * *

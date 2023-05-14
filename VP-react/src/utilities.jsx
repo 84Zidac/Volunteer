@@ -81,6 +81,22 @@ export const getEvents = async() => {
     return response.data
 }
 
+export const getEventsByOrganization = async(organizationId) => {
+  //console.log("organizationId", organizationId)
+  let response;
+    try{
+      if (organizationId) {
+            response = await axios.get(`/events/organization/${organizationId}`)
+          }
+          return response.data
+    } catch (error) {
+        console.log(error);
+        return [];
+    }
+
+    
+}
+
 export const createEvent = async (
     eventName,
     startTime,
@@ -107,6 +123,16 @@ export const createEvent = async (
   export async function getVolunteersList(date) {
     try {
       const response = await axios.get(`/volunteers_list/${date}/`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
+}
+  export async function getVolunteersByEventId(eventId) {
+    console.log('eventId', eventId)
+    try {
+      const response = await axios.get(`/volunteers_list_by_event_id/${eventId}/`);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -142,25 +168,6 @@ export const createEvent = async (
     setUser(response.data)
     return response.data
   }
-
-// export const volunteersAccounted = async (volunteerIds, attendance) => {
-//   console.log('attendance before response in volunteersAccounted() utilities: ', attendance)
-//     const response = await fetch('/volunteer_attendance/', {
-//       method: 'PUT',
-//       headers: {
-//           'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify({
-//           volunteerIds: volunteerIds,
-//           attendance: attendance,
-//       }),
-//   });
-//   if (response.ok) {
-//       return response.json();
-//   } else {
-//       throw new Error('Error while updating attendance');
-//   }
-// }
 
 
   export const volunteersAccounted = async (volunteerIds, isPresent) => {
