@@ -169,6 +169,10 @@ export const createEvent = async (
     return response.data
   }
 
+  export const getEventsAttended = async () =>{
+    let response = await axios.get('/user_attendance')
+    return response.data
+  }
 
   export const volunteersAccounted = async (volunteerIds, isPresent) => {
     try {

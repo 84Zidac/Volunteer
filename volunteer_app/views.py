@@ -143,6 +143,15 @@ def volunteer_attendance(request):
         print(e)
         return JsonResponse({'status': 'fail', 'message': 'Invalid request method'})
 
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_user_attendance(request):
+    try:
+        all_events = Volunteer_Registration.objects.filter(user = request.user.id, attendance = True)
+        event_count = len(all_events)
+        return JsonResponse({'eventsAttended': event_count})
+    except:
+        return JsonResponse({'success': False})
 # @csrf_exempt
 # @api_view(["POST"])
 # @permission_classes([IsAuthenticated])

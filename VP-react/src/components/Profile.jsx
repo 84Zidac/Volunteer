@@ -1,7 +1,7 @@
-import { useContext, useState} from "react";
+import { useContext, useState, useEffect} from "react";
 import {UserContext, OrgContext} from "../App";
 import "./Profile.css"
-import { editProfile, verifyPassword, saveAboutMe} from "../utilities";
+import { editProfile, verifyPassword, saveAboutMe, getEventsAttended} from "../utilities";
 import volunteer from '../images/volunteer.jpg'
 import { Edit, Save } from '@mui/icons-material';
 import {Box, Dialog, DialogTitle, DialogContent, DialogActions, IconButton, Typography, TextField, Alert } from '@mui/material';
@@ -20,6 +20,14 @@ export default function Profile(){
   const [changeSuccess, setChangeSuccess] = useState(false)
   const [editDisabled, setEditDisabled] = useState(true)
   const [save, setSave] = useState(false)
+  const [eventsAttended, setEventsAttended] = useState(null)
+
+  useEffect(()=> {
+    getEventsAttended()
+    .then (data => {
+      setEventsAttended(data.eventsAttended)
+    })
+  },[])
 
   const capitalized = (name) =>{
       let nameLower = name.toLowerCase().split(' ') 
@@ -94,7 +102,7 @@ export default function Profile(){
                   <Typography variant="h6" gutterBottom>
                     Email: {user.email}
                   </Typography>
-                  { user.isCoordinator ? (<div className="profile-subdiv">
+                  { user.isCoordinator && <div className="profile-subdiv">
                     <hr></hr>
                     <Typography variant="h4" gutterBottom>
                     <u>Organization Details</u>
@@ -114,11 +122,11 @@ export default function Profile(){
                     <Typography variant="h6" gutterBottom>
                       Email: {organization.contact_email}
                     </Typography>
-                    </div>
-                  ): (
+                    </div>}
+                  {!user.isCoordinator && eventsAttended && 
                     <div className="profile-subdiv">
                   <Typography variant="h6" gutterBottom>
-                    Events attended: 0
+                    Events attended: {eventsAttended}
                   </Typography>
                   <Typography variant="h6" gutterBottom>
                     About me:
@@ -152,7 +160,7 @@ export default function Profile(){
                         </div>
                       </div>
                   </div>
-                  )} 
+                  } 
                     {save  && (
                       <Alert severity="success" onClose={() => setSave(false)}>
                         Saved!
