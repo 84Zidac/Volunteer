@@ -1,4 +1,4 @@
-# /Users/alexandermills/Documents/personal_projects/VolunteerPlanner/VP_django_app/views.py
+# volunteer_app/views.py
 import os
 from django.http import JsonResponse
 from .models import Volunteer_Registration
@@ -49,6 +49,8 @@ def register_volunteer(request):
         print(user)
         date = request.data.get('date')
         print(date)
+        event_id = request.data.get('event_id')
+        print(event_id)
         num_guests = request.data.get('num_guests', 0)
         print(num_guests)
         # date_object = datetime.strptime(date, "%Y-%m-%d").date()
@@ -56,7 +58,7 @@ def register_volunteer(request):
         volunteer = Volunteer_Registration(user=user,
                               registration_date=date,
                               num_guests=num_guests,
-                              event_id=1)
+                              event_id=event_id)
         volunteer.save()
 
         # Send email using SendGrid
@@ -86,13 +88,29 @@ def register_volunteer(request):
         return JsonResponse({"error": str(e)})
 
 
+# @api_view(["DELETE"])
+# @permission_classes([IsAuthenticated])
+# def delete_volunteer_registration(request, date):
+#     try:
+#         user = request.user
+#         date_object = datetime.strptime(date, "%Y-%m-%d").date()
+#         volunteer = Volunteer_Registration.objects.filter(user_id=user.id, registration_date=date_object).first()
+#         if volunteer is None:
+#             return JsonResponse({"error": "Volunteer registration not found"})
+#         volunteer.delete()
+#         return JsonResponse({"message": "Volunteer registration deleted successfully"})
+#     except Exception as e:
+#         print(e)
+#         return JsonResponse({"error": str(e)})
 @api_view(["DELETE"])
 @permission_classes([IsAuthenticated])
-def delete_volunteer_registration(request, date):
+def delete_volunteer_registration(request, event_id, date):
+
     try:
         user = request.user
         date_object = datetime.strptime(date, "%Y-%m-%d").date()
-        volunteer = Volunteer_Registration.objects.filter(user_id=user.id, registration_date=date_object).first()
+        # volunteer = Volunteer_Registration.objects.filter(user_id=user.id, registration_date=date_object).first()
+        volunteer = Volunteer_Registration.objects.filter(user_id=user.id, registration_date=date_object, event_id=event_id).first()
         if volunteer is None:
             return JsonResponse({"error": "Volunteer registration not found"})
         volunteer.delete()

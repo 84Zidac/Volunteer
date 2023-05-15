@@ -149,3 +149,28 @@ def get_organization_events(request):
         # Return the event list as a JSON response
         return JsonResponse({'events': event_list,
                              'success': True})
+
+@api_view(["GET"])
+def events_on_date(request, date):
+    iso_date = datetime.fromisoformat(date).date()
+    events = Event.objects.filter(start_time__date=iso_date)
+
+    if not events.exists():
+        return JsonResponse({'message': 'No events found', 'success': False})
+
+    event_list = []
+    for event in events:
+        event_dict = {
+            'id': event.id,  # Include the id property
+            'event_name': event.event_name,
+            'start_time': event.start_time.isoformat(),
+            'end_time': event.end_time.isoformat(),
+            'description': event.description,
+            'volunteers_required': event.volunteers_required,
+            'protective_equipment': event.protective_equipment,
+            'address': event.street_address,
+            'organization': event.organization.organization_name
+        }
+        event_list.append(event_dict)
+
+    return JsonResponse({'events': event_list, 'success': True})
