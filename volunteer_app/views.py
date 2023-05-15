@@ -1,6 +1,6 @@
 # volunteer_app/views.py
 import os
-from django.http import JsonResponse  
+from django.http import JsonResponse
 from .models import Volunteer_Registration
 from django.db.models import Sum
 from datetime import datetime
@@ -29,7 +29,7 @@ def get_volunteers_count(request, date):
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
-def get_volunteers_list(request, date):
+def get_volunteers_list(request, date):#re-updated for CheckInPage.jsx
     try:
         date_object = datetime.strptime(date, "%Y-%m-%d").date()
         volunteers = Volunteer_Registration.objects.filter(registration_date=date_object)
@@ -108,7 +108,7 @@ def delete_volunteer_registration(request, event_id, date):
 
 
 @api_view(["GET"])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated]) 
 def get_user_volunteer_list(request):
     try:
         user = request.user
@@ -120,6 +120,33 @@ def get_user_volunteer_list(request):
         return JsonResponse({"error": str(e)})
 
 
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def volunteers_list_by_event_id(request, eventId):
+    try:
+        volunteers = Volunteer_Registration.objects.filter(event_id=eventId)
+        print(volunteers)
+        volunteers_data = [{"id": v.id, "name": f"{v.user.first_name} {v.user.last_name}", "num_guests": v.num_guests} for v in volunteers]
+        return JsonResponse({"volunteers": volunteers_data})
+    except Exception as e:
+        print(e)
+        return JsonResponse({"error": str(e)})
+
+
+@api_view(["PUT"])
+@permission_classes([IsAuthenticated])
+def volunteer_attendance(request):
+    try:
+        volunteer_ids = request.data.get('volunteerIds', [])
+        attendance_status = request.data.get('isPresent')
+        volunteers = Volunteer_Registration.objects.filter(id__in=volunteer_ids)
+        for volunteer in volunteers:
+            volunteer.attendance = attendance_status
+            volunteer.save()
+        return JsonResponse({'status':'success'})
+    except Exception as e:
+        print(e)
+        return JsonResponse({'status': 'fail', 'message': 'Invalid request method'})
 
 # @csrf_exempt
 # @api_view(["POST"])

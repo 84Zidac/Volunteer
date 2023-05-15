@@ -26,6 +26,14 @@ urlpatterns = [
     path('user_volunteer_list/',
          views.get_user_volunteer_list,
          name='user_volunteer_list'),
+
+    path('volunteer_attendance/',
+         views.volunteer_attendance,
+         name='volunteer_attendance'),
+
+    path('volunteers_list_by_event_id/<str:eventId>/',
+         views.volunteers_list_by_event_id,
+         name='volunteers_list_by_event_id'),
 ]
 
 # * * * * * * * * * *

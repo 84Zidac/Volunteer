@@ -31,7 +31,7 @@ def user_organization_sign_up(request):
           website = website,
           contact_email = contact_email,
           phone_number = phone_number,
-          organizer_id = new_coord
+          organizer_id = new_coord.id
         )
         new_org.save()
         return JsonResponse({"success": True})

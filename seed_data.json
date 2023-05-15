@@ -120,7 +120,7 @@
       "description": "Join us for a charity walk to raise awareness and funds for local causes.",
       "volunteers_required": 10,
       "protective_equipment": null,
-      "street_address": "5535 State Route 258, Tippicanoe OH, 44699",
+      "street_address": "Seattle, WA",
       "organization": 11
     }
   },
@@ -134,7 +134,7 @@
       "description": "Help us clean up the local park and surrounding streets. Gloves and bags will be provided.",
       "volunteers_required": 20,
       "protective_equipment": "Gloves and bags provided.",
-      "street_address": "104 Allen St, Cadiz OH, 43907",
+      "street_address": "Miami, FL",
       "organization": 12
     }
   },
@@ -162,7 +162,7 @@
       "description": "Help us restore the natural habitat of a local wildlife sanctuary.",
       "volunteers_required": 15,
       "protective_equipment": "Please wear long pants and sturdy shoes.",
-      "street_address": "Las Vegas, Nv",
+      "street_address": "Las Vegas, NV",
       "organization": 14
     }
   },

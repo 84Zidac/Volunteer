@@ -81,6 +81,22 @@ export const getEvents = async() => {
     return response.data
 }
 
+export const getEventsByOrganization = async(organizationId) => {
+  //console.log("organizationId", organizationId)
+  let response;
+    try{
+      if (organizationId) {
+            response = await axios.get(`/events/organization/${organizationId}`)
+          }
+          return response.data
+    } catch (error) {
+        console.log(error);
+        return [];
+    }
+
+    
+}
+
 export const createEvent = async (
     eventName,
     startTime,
@@ -89,8 +105,6 @@ export const createEvent = async (
     volunteersRequired,
     protectiveEquipment,
     streetAddress,
-
-    organization
   ) => {
     let response = await axios.post('/event-creation/', {
       event_name: eventName,
@@ -100,7 +114,6 @@ export const createEvent = async (
       volunteers_required: volunteersRequired,
       protective_equipment: protectiveEquipment,
       street_address: streetAddress.label,
-      organization: organization,
     });
   
     console.log(response.data.success);
@@ -116,10 +129,53 @@ export const createEvent = async (
       return [];
     }
 }
+  export async function getVolunteersByEventId(eventId) {
+    console.log('eventId', eventId)
+    try {
+      const response = await axios.get(`/volunteers_list_by_event_id/${eventId}/`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
+}
 
   export const getOrganization = async(email) => {
     let response = await axios.post('/organization/', {
         'email' : email
     })
     return response.data.organization
+  }
+
+  export const verifyPassword = async(password) => {
+    let response = await axios.post('/user/curruser/', {
+      "password": password
+    })
+    return response.data
+  }
+
+  export const editProfile = async (password) => {
+    let response = await axios.put('/user/curruser/', {
+      "password": password,
+    })
+    return response.data
+  }
+
+  export const saveAboutMe = async (aboutMe, setUser) => {
+    let response = await axios.put('/user/curruser/', {
+      "about_me": aboutMe,
+    })
+    setUser(response.data)
+    return response.data
+  }
+
+
+  export const volunteersAccounted = async (volunteerIds, isPresent) => {
+    try {
+      const response = await axios.put('/volunteer_attendance/', {volunteerIds, isPresent})
+        return response.data
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
   }

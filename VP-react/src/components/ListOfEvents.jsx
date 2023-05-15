@@ -7,8 +7,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { getEvents } from '../utilities'
-import { useState, useEffect } from 'react';
+import { getEventsByOrganization } from '../utilities'
+import { useState, useEffect, useContext } from 'react';
+import { OrgContext } from '../App';
+
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,35 +39,33 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 
-export default function ListOfEventsTable({ user, onDateClick }) {
+// send organization's ID. 
+export default function ListOfEventsTable({ user, onEventClick }) {
     const [volunteers, setVolunteers] = useState([])
 
+    const { organization } = useContext(OrgContext);
+    
   useEffect(() => {
       const fetchEvents = async () => {
-          // WORK IN PROGRESS. Will add the part for coordinator's only can check in volunteers.
-          // if (user) {
-          //     console.log("getEvents activated to grab list")
-          //     const volunteersData = await getEvents();
-          //     console.log("volunteersData:", volunteersData)
-          //     setVolunteers(volunteersData.events);
-          // } else {
-          //     setVolunteers([])
-          // }
-
-          
-            const volunteersData = await getEvents();
-            setVolunteers(volunteersData.events);
-              
+          // coordinator's only can check in volunteers and only for their organization.
+          if (organization) {
+            // console.log(organization)
+            const volunteersData = await getEventsByOrganization(organization['id']); 
+            if (volunteersData.events) {
+              setVolunteers(volunteersData.events);
+            }
+          }
       }
       fetchEvents();
 
-  }, [user])
+  }, [user, organization])
 
-  const handleDateClick= (dateTime) => {
-    const dateObject = new Date(dateTime)
-    const dateOnly = `${dateObject.getFullYear()}-${String(dateObject.getMonth() + 1).padStart(2, '0')}-${String(dateObject.getDate()).padStart(2, '0')}`;
-    if (onDateClick) {
-      onDateClick(dateOnly)
+
+  const handleEventClick= (eventId) => {
+    // console.log("List of events handleEventClick eventId", eventId)
+    const eventObject = eventId
+     if (onEventClick) {
+      onEventClick(eventObject)
     }
   };
 
@@ -74,7 +74,7 @@ export default function ListOfEventsTable({ user, onDateClick }) {
       <Table  aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Events Info</StyledTableCell>
+            <StyledTableCell>Events ID</StyledTableCell>
             <StyledTableCell align="right">Event name</StyledTableCell>
             <StyledTableCell align="right">start time</StyledTableCell>
             <StyledTableCell align="right">Amount of Volunteers Required</StyledTableCell>
@@ -84,9 +84,9 @@ export default function ListOfEventsTable({ user, onDateClick }) {
         {volunteers.map((row) => (
             <StyledTableRow 
             key={row.id}
-            onClick={() => handleDateClick(row.start_time)}
+            onClick={() => handleEventClick(row.event_id)}
             >
-              <StyledTableCell component="th" scope="row">{row.event_name}</StyledTableCell>
+              <StyledTableCell component="th" scope="row">{row.event_id}</StyledTableCell>
               <StyledTableCell align="right">{row.event_name}</StyledTableCell>
               <StyledTableCell align="right">{row.start_time}</StyledTableCell>
               <StyledTableCell align="right">{row.volunteers_required}</StyledTableCell>
@@ -97,6 +97,8 @@ export default function ListOfEventsTable({ user, onDateClick }) {
     </TableContainer>
   );
 }
+
+// Code below is just to understand, all of what we can iterate through and display on the table. 
 // event_dict = {
 //   'id': event.id,
 //   'event_name': event.event_name,

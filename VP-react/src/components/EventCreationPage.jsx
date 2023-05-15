@@ -6,6 +6,14 @@ import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import { useLoadScript, useJsApiLoader } from "@react-google-maps/api";
 import "./Button.css";
 import "./Input.css";
+import { Paper } from '@mui/material';
+import { styled } from '@mui/material/styles';
+
+const CustomPaper = styled(Paper)(({ theme }) => ({
+  backgroundColor: "#204051",
+  width:"70%",
+  padding:"2em",
+}));
 
 const libraries = ["places"];
 
@@ -18,20 +26,20 @@ export default function EventCreationPage() {
   const [volunteersRequired, setVolunteersRequired] = useState("");
   const [protectiveEquipment, setProtectiveEquipment] = useState("");
   const [streetAddress, setStreetAddress] = useState("");
-  const [organization, setOrganization] = useState("BBB");
 
   // setOrganization
   const navigate = useNavigate();
 
   // Google Address API
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyBPOv4E9erS7mWYHQXo7Kb58yCiUQcT0X4",
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_API_KEY,
     libraries,
   });
   
   return (
-    <div>
-      <h1>Create an Event</h1>
+    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+    <CustomPaper>
+      <h1 style={{color: 'white'}}>Create an Event</h1>
 
       <form 
         onSubmit={(e) => {
@@ -44,7 +52,6 @@ export default function EventCreationPage() {
             volunteersRequired,
             protectiveEquipment,
             streetAddress,
-            organization
           );
           console.log("startTime:", startTime); 
           console.log("endTime:", endTime); 
@@ -53,7 +60,6 @@ export default function EventCreationPage() {
           console.log("volunteersRequired:", volunteersRequired); 
           console.log("protectiveEquipment:", protectiveEquipment); 
           console.log("streetAddress:", streetAddress); 
-          console.log("organization:", organization)
           setEventName("");
           setStartTime("");
           setEndTime("");
@@ -72,30 +78,33 @@ export default function EventCreationPage() {
           name="event_name"
           placeholder="Event Name"
           required
+          style={{marginRight:'0'}}
           className="input-field"
           value={eventName} 
           onChange={(e) => setEventName(e.target.value)} 
         />
 
-        <label htmlFor="start_time">Start Time:</label>
+        <label htmlFor="start_time" style={{color: 'white', fontSize:'1em'}}>Start Time:</label>
         <input
           type="datetime-local"
           id="start_time"
           name="start_time"
           placeholder="Start Time"
           required
+          style={{marginRight:'0'}}
           className="input-field"
           value={startTime} 
           onChange={(e) => setStartTime(e.target.value)} 
         />
 
-        <label htmlFor="end_time">End Time:</label>
+        <label htmlFor="end_time" style={{color: 'white', fontSize:'1em'}}>End Time:</label>
         <input
           type="datetime-local"
           id="end_time"
           name="end_time"
           placeholder="End Time"
           required
+          style={{marginRight:'0'}}
           className="input-field"
           value={endTime} 
           onChange={(e) => setEndTime(e.target.value)} 
@@ -107,6 +116,7 @@ export default function EventCreationPage() {
           placeholder="Description"
           rows="5"
           required
+          style={{marginRight:'0'}}
           className="input-field"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
@@ -118,6 +128,8 @@ export default function EventCreationPage() {
           name="volunteers_required"
           placeholder="Volunteers Required"
           required
+          style={{marginRight:'0'}}
+          min="0"
           className="input-field"
           value={volunteersRequired}
           onChange={(e) => setVolunteersRequired(e.target.value)}
@@ -128,6 +140,7 @@ export default function EventCreationPage() {
           name="protective_equipment"
           placeholder="Protective Equipment"
           rows="3"
+          style={{marginRight:'0'}}
           className="input-field"
           value={protectiveEquipment}
           onChange={(e) => setProtectiveEquipment(e.target.value)}
@@ -154,22 +167,11 @@ export default function EventCreationPage() {
           </GooglePlacesAutocomplete>
         </div>
 
-        
-        <input
-          type="text"
-          id="organization"
-          name="organization"
-          placeholder="Organization"
-          required
-          className="input-field"
-          value={organization}
-          onChange={(e) => setOrganization(e.target.value)}
-        />
-
-        <button className="nav-button" type="submit">
+        <button className="nav-button" type="submit" style={{marginTop:'1em'}}>
           Create Event
         </button>
       </form>
+    </CustomPaper>
     </div>
   );
 }

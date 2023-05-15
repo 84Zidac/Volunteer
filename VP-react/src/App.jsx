@@ -155,6 +155,7 @@ function App() {
     if (user && user.isCoordinator) {
       const getOrg = async () => {
         setOrganization (await getOrganization(user.email))
+        
        }
        getOrg()
       }
