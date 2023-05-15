@@ -1,3 +1,4 @@
+# event_app/models.py
 from django.db import models
 from organization_app.models import Organization
 
@@ -19,7 +20,3 @@ class Event(models.Model):
     street_address = models.TextField(blank=False, null=False)
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
 
-# coordinator will be forien key to the organization of event
-
-
-# verify attendance

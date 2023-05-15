@@ -15,7 +15,11 @@ urlpatterns = [
          views.get_volunteers_list,
          name='volunteers_list'),  # this one
 
-    path('delete_volunteer_registration/<str:date>/',
+#     path('delete_volunteer_registration/<str:date>/',
+#          views.delete_volunteer_registration,
+#          name='delete_volunteer_registration'),
+
+    path('delete_volunteer_registration/<int:event_id>/<str:date>/',
          views.delete_volunteer_registration,
          name='delete_volunteer_registration'),
 

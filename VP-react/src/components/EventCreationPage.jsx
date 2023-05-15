@@ -132,10 +132,11 @@ export default function EventCreationPage() {
           value={protectiveEquipment}
           onChange={(e) => setProtectiveEquipment(e.target.value)}
         ></textarea>
-
+        
         <div>
           <GooglePlacesAutocomplete
             selectProps={{
+              placeholder:"Street Address",
               value: streetAddress,
               onChange: setStreetAddress,
             }}
@@ -144,7 +145,7 @@ export default function EventCreationPage() {
               type="text"
               id="street_address"
               name="street_address"
-              placeholder="Street Address"
+              // placeholder="Street Address"
               required
               className="input-field"
               // value={streetAddress}
@@ -152,6 +153,7 @@ export default function EventCreationPage() {
             />
           </GooglePlacesAutocomplete>
         </div>
+
         
         <input
           type="text"
