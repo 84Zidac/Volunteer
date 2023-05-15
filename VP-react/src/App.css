@@ -75,3 +75,39 @@ body {
   flex-direction: column;
   align-items: center;
 }
+
+.check-in-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color: #3B6978;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.check-in-button:hover {
+  background-color: #3B6978;
+  color: #c3e4e7;
+}
+
+.no-show-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color: black;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.no-show-button:hover {
+  background-color: black;
+  color: #c3e4e7;
+}
