@@ -60,8 +60,8 @@ export const NavBar = ()=> {
                                 <Link to="/event-creation">
                                     <button className="nav-button">Event Creation Page</button>
                                 </Link>
-                                <Link to="/checkin">
-                                    <button className="nav-button">Check In</button>
+                                <Link to="/organizer/dashboard">
+                                    <button className="nav-button">Dashboard</button>
                                 </Link>
                                 <Avatar {...stringAvatar(user.name)} onClick={(e)=> navigate('user/profile')}/>
                             </div>
