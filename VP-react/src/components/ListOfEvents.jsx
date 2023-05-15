@@ -6,6 +6,7 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import TableFooter from '@mui/material/TableFooter';
 import Paper from '@mui/material/Paper';
 import { getEventsByOrganization } from '../utilities'
 import { useState, useEffect, useContext } from 'react';
@@ -61,38 +62,56 @@ export default function ListOfEventsTable({ user, onEventClick }) {
   }, [user, organization])
 
 
-  const handleEventClick= (eventId) => {
-    // console.log("List of events handleEventClick eventId", eventId)
-    const eventObject = eventId
-     if (onEventClick) {
-      onEventClick(eventObject)
-    }
-  };
+  function convertTimeAndDate(datetimeString){
+    const datetime = new Date(datetimeString);
+  
+    const formattedDate = datetime.toLocaleDateString(undefined, {
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+    });
+  
+    const formattedTime = datetime.toLocaleString(undefined, {
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric"
+    });
+    return (
+    `${formattedDate}, @ ${formattedTime}`
+    )
+  }
 
   return (
     <TableContainer component={Paper} sx={{ minWidth: 300, maxWidth: 1000 }}>
       <Table  aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Events ID</StyledTableCell>
+            <StyledTableCell>Event ID</StyledTableCell>
             <StyledTableCell align="right">Event name</StyledTableCell>
-            <StyledTableCell align="right">start time</StyledTableCell>
-            <StyledTableCell align="right">Amount of Volunteers Required</StyledTableCell>
+            <StyledTableCell align="right">Start time</StyledTableCell>
+            <StyledTableCell align="right">End time</StyledTableCell>
+            <StyledTableCell align="right">Volunteers Required</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
         {volunteers.map((row) => (
             <StyledTableRow 
             key={row.id}
-            onClick={() => handleEventClick(row.event_id)}
+            onClick={() => {onEventClick(row.event_id, row.event_name)}}
             >
               <StyledTableCell component="th" scope="row">{row.event_id}</StyledTableCell>
               <StyledTableCell align="right">{row.event_name}</StyledTableCell>
-              <StyledTableCell align="right">{row.start_time}</StyledTableCell>
+              <StyledTableCell align="right">{convertTimeAndDate(row.start_time)}</StyledTableCell>
+              <StyledTableCell align="right">{convertTimeAndDate(row.end_time)}</StyledTableCell>
               <StyledTableCell align="right">{row.volunteers_required}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
+        <TableFooter>
+        <TableRow>
+            <TableCell colSpan={5}>*Click on any of the event fields to view the volunteers and check them in for the event selected</TableCell>
+          </TableRow>
+        </TableFooter>
       </Table>
     </TableContainer>
   );

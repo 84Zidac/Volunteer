@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 // import { getVolunteersList } from '../utilities';
 import { getVolunteersList, volunteersAccounted } from '../utilities';
 import { getVolunteersByEventId } from '../utilities';
-import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -89,12 +88,16 @@ export default function VolunteersList({ selectedEventId }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {volunteers.map((volunteer) => {
+          {volunteers.length > 0 ? (volunteers.map((volunteer) => {
             const [firstName, ...lastName] = volunteer.name.split(' ');
             return (
               <StyledTableRow key={volunteer.id}>
                 <StyledTableCell padding="checkbox">
                   <Checkbox
+                    sx={{color:'white',
+                    '&.Mui-checked': {
+                      color: 'white'}
+                    }}
                     onChange={() => onSelectVolunteer(volunteer.id)}
                     checked={selectedVolunteers.includes(volunteer.id)}
                   />
@@ -107,21 +110,23 @@ export default function VolunteersList({ selectedEventId }) {
                 <StyledTableCell>{volunteer.name}</StyledTableCell> {/* Full Name */}
               </StyledTableRow>
             );
-          })}
+          })) : (<StyledTableRow> <StyledTableCell colSpan={5}>No volunteers to check in!</StyledTableCell></StyledTableRow>)}
         </TableBody>
       </Table>
-      <Button 
-        variant="contained" 
-        onClick={handleCheckIn}
-      >
-        Checkin Volunteer
-      </Button>
-      <Button 
-        variant="contained" 
-        onClick={handleNoShow}
-      >
-        No Show
-      </Button>
+      {volunteers.length > 0 &&       
+      <div>
+        <button 
+          onClick={handleCheckIn}
+          className='check-in-button'
+        >
+          Checkin
+        </button>
+        <button 
+          onClick={handleNoShow}
+          className='no-show-button'
+        >
+          No Show
+        </button></div>}
     </TableContainer>
   );
 }

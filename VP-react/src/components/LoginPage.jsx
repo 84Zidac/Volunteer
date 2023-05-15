@@ -1,5 +1,5 @@
 // VP-react/src/components/RegisterLoginPage.jsx
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { logIn } from "../utilities";
 import { UserContext } from "../App";
 import { useNavigate } from "react-router-dom";
@@ -25,23 +25,33 @@ export const LogIn = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(false);
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user && user.isCoordinator !== undefined) {
+      handleNavigate()
+    }
+  }, [user]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     const success = await logIn(email, password, setUser);
-
-    if (success) {
-      navigate("/user/dashboard");
-    }
-    else {
+    if (!success) {
       setError(true)
     }
-
     setEmail("");
     setPassword("");
   };
+
+  const handleNavigate = () => {
+    if (!user.isCoordinator) {
+      navigate("/user/dashboard");
+    }
+    else if (user.isCoordinator) {
+      navigate("/organizer/dashboard");
+    }
+  }
 
   return (
     <ThemeProvider theme={theme}>

@@ -34,7 +34,11 @@ urlpatterns = [
     path('volunteers_list_by_event_id/<str:eventId>/',
          views.volunteers_list_by_event_id,
          name='volunteers_list_by_event_id'),
-]
+     
+     path('user_attendance', 
+          views.get_user_attendance,
+          name="user_attendance")
+     ]
 
 # * * * * * * * * * *
 # path('delete_volunteer_registration/<int:user_id>/<str:date>/',
