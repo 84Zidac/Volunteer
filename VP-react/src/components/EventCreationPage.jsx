@@ -44,6 +44,13 @@ export default function EventCreationPage() {
       <form 
         onSubmit={(e) => {
           e.preventDefault();
+
+          // Check if end time is after start time
+          if (new Date(startTime) >= new Date(endTime)) {
+            alert("End time must be after start time");
+            return;
+          }
+          
           createEvent(
             eventName,
             startTime,
