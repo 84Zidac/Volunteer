@@ -13,7 +13,7 @@ export default function CalendarDate() {
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [volunteers, setVolunteers] = useState([]); 
-  
+  const [events, setEvents] = useState([]);
 
     useEffect(() => {
       async function fetchData() {
@@ -28,15 +28,18 @@ export default function CalendarDate() {
         const data = await response.json();
         setWeatherData(data);
 
-        // Fetch volunteers list // * * * * * * * * * * 
+        // Fetch volunteers and events list // * * * * * * * * * * 
         try {
           const isoDate = new Date(date).toISOString().split('T')[0];
           const response2 = await axios.get(`/volunteers_list/${isoDate}`);
           setVolunteers(response2.data.volunteers);
+          const response3 = await axios.get(`/events_on_date/${isoDate}`);
+          const events = response3.data.events;
+          setEvents(events);
+  
         } catch (error) {
           console.log("Error occurred:", error);
         }
-
         setLoading(false);
       }
       fetchData();
@@ -46,13 +49,12 @@ export default function CalendarDate() {
 
 
   // * * * * * * * * * * * * * * * * * * * * * * * * 
-  const handleUnRegisterClick = async () => {
+  const handleUnRegisterClick = async (eventId) => {
     try {
         const isoDate = new Date(date).toISOString().split('T')[0];
         // const numGuests = document.getElementById("guestVolunteer").value; // * * * * * * * *
         // console.log(`Unregistering ${numGuests} guests for ${isoDate}`); // * * * * * * 
-
-        const response = await axios.delete(`/delete_volunteer_registration/${isoDate}`); // * * * * * *
+        const response = await axios.delete(`/delete_volunteer_registration/${eventId}/${isoDate}`);  // * * * * * *
 
         console.log("Response received:", response.data);
 
@@ -67,13 +69,13 @@ export default function CalendarDate() {
     }
   };
   // * * * * * * * * * * * * * * * * * * * * * * * * 
-  const handleRegisterClick = async () => {
+  const handleRegisterClick = async (eventId) => {
     try {
       const isoDate = new Date(date).toISOString().split('T')[0]; // Convert date to ISO format and extract date part
       const postData = {
         date: isoDate,
         num_guests: document.getElementById("guestVolunteer").value,
-        // event_id: 1
+        event_id: eventId
       };
   
       console.log("Data to be sent:", postData);
@@ -137,6 +139,23 @@ return (
           className="input-field"
         />
       </form>
+      
+      {events && events.length > 0 && (
+      <div>
+        <h2>Events for {formattedDate}</h2>
+        <ul>
+          {events.map((event, index, id) => (
+            <li key={index}>
+            {event.event_name} - {event.start_time} to {event.end_time}
+            <button onClick={() => handleRegisterClick(event.id)}>Register</button>
+            <button onClick={() => handleUnRegisterClick(event.id)}>Unregister</button>
+            <span>Event ID: {event.id}</span>
+          </li>
+          ))}
+        </ul>
+      </div>
+    )}
+    {/* <div>
       <input
         type="Register"
         value="Register"
@@ -150,8 +169,8 @@ return (
       value="Unregister"
       className="nav-button"
       onClick={handleUnRegisterClick}
-    />
-
+    /> */}
+    {/* this does not split the volunteers up by the event they are going to */}
     {volunteers && volunteers.length > 0 && (
       <div>
         <h2>Volunteers for {formattedDate}</h2>
@@ -165,34 +184,7 @@ return (
       </div>
     )}
   </div>
+  </div>
 );
           }
 
-
-  // const handleRegisterClick = async () => {
-  //   try {
-  //     const isoDate = new Date(date).toISOString().split('T')[0]; // Convert date to ISO format and extract date part
-  //     const numGuests = document.getElementById("guestVolunteer").value;
-  //     console.log(`Registering ${numGuests} guests for ${isoDate}`);
-  
-  //     const postData = {
-  //       date: isoDate,
-  //       num_guests: numGuests,
-  //     };
-  
-  //     console.log("Data to be sent:", postData);
-  
-  //     const response = await axios.post("/register_volunteer/", postData);
-  
-  //     console.log("Response received:", response.data);
-  
-  //     if (response.data.message) {
-  //       alert(response.data.message);
-  //     } else if (response.data.error) {
-  //       alert(response.data.error);
-  //     }
-  //   } catch (error) {
-  //     console.log("Error occurred:", error);
-  //     alert("Error occurred: " + error);
-  //   }
-  // };
