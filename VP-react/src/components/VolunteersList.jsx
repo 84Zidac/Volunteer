@@ -9,15 +9,17 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import TableFooter from '@mui/material/TableFooter';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 import { Alert } from '@mui/material';
 
-export default function VolunteersList({ selectedEventId }) {
+export default function VolunteersList({ selectedEventId, selectedEventDate, formattedDate }) {
   const [volunteers, setVolunteers] = React.useState([]);
   const [selectedVolunteers, setSelectedVolunteers] = useState([]);
   const [saved, setSaved]  = useState(false)
   const [error, setError]  = useState(false)
+  const isInactive = formattedDate !== selectedEventDate
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -109,6 +111,7 @@ export default function VolunteersList({ selectedEventId }) {
                     }}
                     onChange={() => onSelectVolunteer(volunteer.id)}
                     checked={selectedVolunteers.includes(volunteer.id)}
+                    disabled = {isInactive}
                   />
                 </StyledTableCell>
                 <StyledTableCell component="th" scope="row">
@@ -130,7 +133,7 @@ export default function VolunteersList({ selectedEventId }) {
     <Alert severity="error" onClose={() => setError(false)}>
       Saved!
     </Alert> )}
-      {volunteers.length > 0 &&       
+      {volunteers.length > 0 && selectedEventDate === formattedDate &&      
       <div style={{backgroundColor:'#f3e5ab'}}>
         <button 
           onClick={handleCheckIn}
@@ -144,6 +147,14 @@ export default function VolunteersList({ selectedEventId }) {
         >
           No Show
         </button></div>}
+        {formattedDate > selectedEventDate && (        
+        <TableFooter>
+        <TableRow>
+            <TableCell colSpan={5}>
+              The total of {volunteers.filter(volunteer => volunteer.attendance === true).length} volunteers checked in for this event on {selectedEventDate}.
+            </TableCell>
+          </TableRow>
+        </TableFooter>)}
     </TableContainer>
   );
 }

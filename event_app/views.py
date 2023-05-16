@@ -94,6 +94,7 @@ def event_list_by_organization(request, organizationId):
     print(request)
     print(organizationId)
     if request.method == 'GET':
+        current_date = timezone.now().date()
         events = Event.objects.filter(organization_id=organizationId)
             # Build a list of dictionaries containing event information
         print("$$$$$$$$$$")
@@ -102,8 +103,23 @@ def event_list_by_organization(request, organizationId):
         # If there are no events, return a JSON response with an appropriate message
             return JsonResponse({'message': 'No events found',
                                  'success': False})
+        upcoming_events = events.filter(start_time__date__gte=current_date).order_by('start_time')
+        past_events = events.filter(start_time__date__lt=current_date).order_by('-start_time')
         event_list = []
-        for event in events:
+        for event in  upcoming_events:
+            event_dict = {
+                'event_id': event.id,
+                'event_name': event.event_name,
+                'start_time': event.start_time.isoformat(),
+                'end_time': event.end_time.isoformat(),
+                'description': event.description,
+                'volunteers_required': event.volunteers_required,
+                'protective_equipment': event.protective_equipment,
+                'address': event.street_address,
+                'organization': event.organization.organization_name
+            }
+            event_list.append(event_dict)
+        for event in past_events:
             event_dict = {
                 'event_id': event.id,
                 'event_name': event.event_name,
