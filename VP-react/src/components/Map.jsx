@@ -7,7 +7,7 @@ import './Input.css'
 import { Select, MenuItem } from '@mui/material';
 
 // Define the Map component and receive the addresses prop
-export default function Map({ events }) {
+export default function Map({ events, register }) {
   // Declare state variables to store activeMarker, userLocation, and circleDistance
   const {user, setUser} = React.useContext(UserContext)
   const [activeMarker, setActiveMarker] = React.useState(null);
@@ -180,7 +180,7 @@ return (
                 <div className="eventDetails">{`Start: ${convertTimeAndDate(event.start_time)}`}</div>
                 <div className="eventDetails">{`End: ${convertTimeAndDate(event.end_time)}`}</div>
                 <div className="eventDetails">{`${event.address}`}</div>
-                {user && user.name ? (<button>Sign Up</button>): <div></div>}
+                {user && user.name && register ? (<button onClick={() => register(event.id)}>Sign Up</button>): <div></div>}
                 </>
               </InfoWindow>
             )}
