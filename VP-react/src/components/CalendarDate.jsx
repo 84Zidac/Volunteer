@@ -1,11 +1,15 @@
 // /Users/alexandermills/Documents/personal_projects/VolunteerPlanner/VP-react/src/components/CalendarDate.jsx
 import { useParams } from 'react-router-dom';
+import { useLoadScript, useJsApiLoader } from "@react-google-maps/api";
 import React, { useState, useEffect } from 'react';
 import "./Button.css";
 import "./Input.css";
 import "./CalendarDate.css";
 import axios from 'axios';
+import Map from "./Map";
 
+
+const libraries = ["places"];
 
 export default function CalendarDate() {
   const { date } = useParams();
@@ -14,6 +18,11 @@ export default function CalendarDate() {
   const [loading, setLoading] = useState(true);
   const [volunteers, setVolunteers] = useState([]); 
   const [events, setEvents] = useState([]);
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_API_KEY,
+    libraries,
+  });
 
     useEffect(() => {
       async function fetchData() {
@@ -155,6 +164,7 @@ return (
         </ul>
       </div>
     )}
+
     {/* <div>
       <input
         type="Register"
@@ -184,6 +194,9 @@ return (
       </div>
     )}
   </div>
+  <div style={{ display: "flex", justifyContent: "center" }}>
+          <Map events={events} register={handleRegisterClick} />
+        </div>
   </div>
 );
           }
