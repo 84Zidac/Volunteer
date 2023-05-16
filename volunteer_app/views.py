@@ -139,7 +139,7 @@ def volunteers_list_by_event_id(request, eventId):
     try:
         volunteers = Volunteer_Registration.objects.filter(event_id=eventId)
         print(volunteers)
-        volunteers_data = [{"id": v.id, "name": f"{v.user.first_name} {v.user.last_name}", "num_guests": v.num_guests} for v in volunteers]
+        volunteers_data = [{"id": v.id, "name": f"{v.user.first_name} {v.user.last_name}", "num_guests": v.num_guests, "attendance": v.attendance} for v in volunteers]
         return JsonResponse({"volunteers": volunteers_data})
     except Exception as e:
         print(e)

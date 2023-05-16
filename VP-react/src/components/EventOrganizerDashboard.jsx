@@ -5,8 +5,8 @@ import '../App.css'
 export default function EventOrganizerDashboard() {
   const navigate = useNavigate();
 
-  const handleEventClick = (event_id, event_name) => {
-      navigate('/checkin', {state:{selectedEventId: event_id, selectedEventName: event_name}})
+  const handleEventClick = (event_id, event_name, event_date) => {
+      navigate('/checkin', {state:{selectedEventId: event_id, selectedEventName: event_name, selectedEventDate: event_date}})
   }
   return (
     <div>

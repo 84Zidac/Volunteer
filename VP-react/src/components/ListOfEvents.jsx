@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import { TablePagination } from '@mui/material';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
@@ -62,24 +63,40 @@ export default function ListOfEventsTable({ user, onEventClick }) {
   }, [user, organization])
 
 
-  function convertTimeAndDate(datetimeString){
+  function convertDate(datetimeString){
     const datetime = new Date(datetimeString);
-  
     const formattedDate = datetime.toLocaleDateString(undefined, {
     year: "numeric",
     month: "long",
     day: "numeric"
     });
-  
+    return (
+    `${formattedDate}`
+    )
+  }
+
+  function convertTime(datetimeString){
+    const datetime = new Date(datetimeString);
     const formattedTime = datetime.toLocaleString(undefined, {
     hour: "numeric",
     minute: "numeric",
-    second: "numeric"
     });
     return (
-    `${formattedDate}, @ ${formattedTime}`
+    `${formattedTime}`
     )
   }
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const handleChangePage = (newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   return (
     <TableContainer component={Paper} sx={{ minWidth: 300, maxWidth: 1000 }}>
@@ -88,6 +105,7 @@ export default function ListOfEventsTable({ user, onEventClick }) {
           <TableRow>
             <StyledTableCell>Event ID</StyledTableCell>
             <StyledTableCell align="right">Event name</StyledTableCell>
+            <StyledTableCell align="right">Date</StyledTableCell>
             <StyledTableCell align="right">Start time</StyledTableCell>
             <StyledTableCell align="right">End time</StyledTableCell>
             <StyledTableCell align="right">Volunteers Required</StyledTableCell>
@@ -97,22 +115,33 @@ export default function ListOfEventsTable({ user, onEventClick }) {
         {volunteers.map((row) => (
             <StyledTableRow 
             key={row.id}
-            onClick={() => {onEventClick(row.event_id, row.event_name)}}
+            onClick={() => {onEventClick(row.event_id, row.event_name, convertDate(row.start_time))}}
             >
               <StyledTableCell component="th" scope="row">{row.event_id}</StyledTableCell>
               <StyledTableCell align="right">{row.event_name}</StyledTableCell>
-              <StyledTableCell align="right">{convertTimeAndDate(row.start_time)}</StyledTableCell>
-              <StyledTableCell align="right">{convertTimeAndDate(row.end_time)}</StyledTableCell>
+              <StyledTableCell align="right">{convertDate(row.start_time)}</StyledTableCell>
+              <StyledTableCell align="right">{convertTime(row.start_time)}</StyledTableCell>
+              <StyledTableCell align="right">{convertTime(row.end_time)}</StyledTableCell>
               <StyledTableCell align="right">{row.volunteers_required}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
         <TableFooter>
         <TableRow>
-            <TableCell colSpan={5}>*Click on any of the event fields to view the volunteers and check them in for the event selected</TableCell>
+            <TableCell colSpan={6}>*Click on any of the event fields to view the volunteers and check them in for the event selected</TableCell>
           </TableRow>
         </TableFooter>
       </Table>
+      <TablePagination
+        rowsPerPageOptions={[10]}
+        component="div"
+        count={volunteers.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+
     </TableContainer>
   );
 }

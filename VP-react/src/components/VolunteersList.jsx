@@ -9,12 +9,17 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import TableFooter from '@mui/material/TableFooter';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
+import { Alert } from '@mui/material';
 
-export default function VolunteersList({ selectedEventId }) {
+export default function VolunteersList({ selectedEventId, selectedEventDate, formattedDate }) {
   const [volunteers, setVolunteers] = React.useState([]);
   const [selectedVolunteers, setSelectedVolunteers] = useState([]);
+  const [saved, setSaved]  = useState(false)
+  const [error, setError]  = useState(false)
+  const isInactive = formattedDate !== selectedEventDate
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -38,18 +43,24 @@ export default function VolunteersList({ selectedEventId }) {
     },
   }));
   const handleCheckIn = async () => {
+    setSaved(false)
     const response = await volunteersAccounted(selectedVolunteers, true);
     if (response.status === 'success') {
+      setSaved(true)
       console.log(handleCheckIn, 'successfully updated')
     }else{
+      setError(true)
       console.log(handleCheckIn, 'no updates made')
     }
   }
   const handleNoShow = async () => {
+    setSaved(false)
     const response = await volunteersAccounted(selectedVolunteers, false);
     if (response.status === 'success') {
+      setSaved(true)
       console.log(handleNoShow, 'successfully updated')
     }else{
+      setError(true)
       console.log(handleNoShow, 'no updates made')
     }
   }
@@ -73,7 +84,7 @@ export default function VolunteersList({ selectedEventId }) {
       }
     };
     fetchVolunteers();
-  }, [selectedEventId]);
+  }, [selectedEventId, saved]);
 
   return (
     <TableContainer component={Paper} sx={{ minWidth: 300, maxWidth: 1000 }}>
@@ -84,7 +95,7 @@ export default function VolunteersList({ selectedEventId }) {
             <StyledTableCell>ID</StyledTableCell>
             <StyledTableCell>First Name</StyledTableCell>
             <StyledTableCell>Last Name</StyledTableCell>
-            <StyledTableCell>Full Name</StyledTableCell>
+            <StyledTableCell>Checked in?</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -100,6 +111,7 @@ export default function VolunteersList({ selectedEventId }) {
                     }}
                     onChange={() => onSelectVolunteer(volunteer.id)}
                     checked={selectedVolunteers.includes(volunteer.id)}
+                    disabled = {isInactive}
                   />
                 </StyledTableCell>
                 <StyledTableCell component="th" scope="row">
@@ -107,19 +119,27 @@ export default function VolunteersList({ selectedEventId }) {
                 </StyledTableCell>
                 <StyledTableCell>{firstName}</StyledTableCell> {/* First Name */}
                 <StyledTableCell>{lastName.join(' ')}</StyledTableCell> {/* Last Name */}
-                <StyledTableCell>{volunteer.name}</StyledTableCell> {/* Full Name */}
+                <StyledTableCell>{volunteer.attendance ? ("Yes") : ("No")}</StyledTableCell> {/* Attendance */}
               </StyledTableRow>
             );
           })) : (<StyledTableRow> <StyledTableCell colSpan={5}>No volunteers to check in!</StyledTableCell></StyledTableRow>)}
         </TableBody>
       </Table>
-      {volunteers.length > 0 &&       
-      <div>
+      {saved  && (
+    <Alert severity="success" onClose={() => setSaved(false)}>
+      Saved!
+    </Alert> )}
+    {error  && (
+    <Alert severity="error" onClose={() => setError(false)}>
+      Saved!
+    </Alert> )}
+      {volunteers.length > 0 && selectedEventDate === formattedDate &&      
+      <div style={{backgroundColor:'#f3e5ab'}}>
         <button 
           onClick={handleCheckIn}
           className='check-in-button'
         >
-          Checkin
+          Check in
         </button>
         <button 
           onClick={handleNoShow}
@@ -127,6 +147,14 @@ export default function VolunteersList({ selectedEventId }) {
         >
           No Show
         </button></div>}
+        {formattedDate > selectedEventDate && (        
+        <TableFooter>
+        <TableRow>
+            <TableCell colSpan={5}>
+              The total of {volunteers.filter(volunteer => volunteer.attendance === true).length} volunteers checked in for this event on {selectedEventDate}.
+            </TableCell>
+          </TableRow>
+        </TableFooter>)}
     </TableContainer>
   );
 }
