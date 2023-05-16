@@ -74,10 +74,20 @@ export default function ListOfEventsTable({ user, onEventClick }) {
     const formattedTime = datetime.toLocaleString(undefined, {
     hour: "numeric",
     minute: "numeric",
-    second: "numeric"
     });
     return (
-    `${formattedDate}, @ ${formattedTime}`
+    `${formattedDate}, ${formattedTime}`
+    )
+  }
+
+  function convertTime(datetimeString){
+    const datetime = new Date(datetimeString);
+    const formattedTime = datetime.toLocaleString(undefined, {
+    hour: "numeric",
+    minute: "numeric",
+    });
+    return (
+    `${formattedTime}`
     )
   }
 
@@ -102,7 +112,7 @@ export default function ListOfEventsTable({ user, onEventClick }) {
               <StyledTableCell component="th" scope="row">{row.event_id}</StyledTableCell>
               <StyledTableCell align="right">{row.event_name}</StyledTableCell>
               <StyledTableCell align="right">{convertTimeAndDate(row.start_time)}</StyledTableCell>
-              <StyledTableCell align="right">{convertTimeAndDate(row.end_time)}</StyledTableCell>
+              <StyledTableCell align="right">{convertTime(row.end_time)}</StyledTableCell>
               <StyledTableCell align="right">{row.volunteers_required}</StyledTableCell>
             </StyledTableRow>
           ))}

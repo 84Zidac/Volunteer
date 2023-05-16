@@ -11,10 +11,13 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
+import { Alert } from '@mui/material';
 
 export default function VolunteersList({ selectedEventId }) {
   const [volunteers, setVolunteers] = React.useState([]);
   const [selectedVolunteers, setSelectedVolunteers] = useState([]);
+  const [saved, setSaved]  = useState(false)
+  const [error, setError]  = useState(false)
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -38,18 +41,24 @@ export default function VolunteersList({ selectedEventId }) {
     },
   }));
   const handleCheckIn = async () => {
+    setSaved(false)
     const response = await volunteersAccounted(selectedVolunteers, true);
     if (response.status === 'success') {
+      setSaved(true)
       console.log(handleCheckIn, 'successfully updated')
     }else{
+      setError(true)
       console.log(handleCheckIn, 'no updates made')
     }
   }
   const handleNoShow = async () => {
+    setSaved(false)
     const response = await volunteersAccounted(selectedVolunteers, false);
     if (response.status === 'success') {
+      setSaved(true)
       console.log(handleNoShow, 'successfully updated')
     }else{
+      setError(true)
       console.log(handleNoShow, 'no updates made')
     }
   }
@@ -73,7 +82,7 @@ export default function VolunteersList({ selectedEventId }) {
       }
     };
     fetchVolunteers();
-  }, [selectedEventId]);
+  }, [selectedEventId, saved]);
 
   return (
     <TableContainer component={Paper} sx={{ minWidth: 300, maxWidth: 1000 }}>
@@ -84,7 +93,7 @@ export default function VolunteersList({ selectedEventId }) {
             <StyledTableCell>ID</StyledTableCell>
             <StyledTableCell>First Name</StyledTableCell>
             <StyledTableCell>Last Name</StyledTableCell>
-            <StyledTableCell>Full Name</StyledTableCell>
+            <StyledTableCell>Checked in?</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -107,19 +116,27 @@ export default function VolunteersList({ selectedEventId }) {
                 </StyledTableCell>
                 <StyledTableCell>{firstName}</StyledTableCell> {/* First Name */}
                 <StyledTableCell>{lastName.join(' ')}</StyledTableCell> {/* Last Name */}
-                <StyledTableCell>{volunteer.name}</StyledTableCell> {/* Full Name */}
+                <StyledTableCell>{volunteer.attendance ? ("Yes") : ("No")}</StyledTableCell> {/* Attendance */}
               </StyledTableRow>
             );
           })) : (<StyledTableRow> <StyledTableCell colSpan={5}>No volunteers to check in!</StyledTableCell></StyledTableRow>)}
         </TableBody>
       </Table>
+      {saved  && (
+    <Alert severity="success" onClose={() => setSaved(false)}>
+      Saved!
+    </Alert> )}
+    {error  && (
+    <Alert severity="error" onClose={() => setError(false)}>
+      Saved!
+    </Alert> )}
       {volunteers.length > 0 &&       
-      <div>
+      <div style={{backgroundColor:'#f3e5ab'}}>
         <button 
           onClick={handleCheckIn}
           className='check-in-button'
         >
-          Checkin
+          Check in
         </button>
         <button 
           onClick={handleNoShow}
