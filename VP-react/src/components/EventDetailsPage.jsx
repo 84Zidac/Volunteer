@@ -45,7 +45,7 @@ export default function EventDetailsPage() {
   }
 
   return (
-    <div>
+    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
       <CustomPaper>
       <h1>Event Details</h1>
       <p>ID: {event.id}</p>
