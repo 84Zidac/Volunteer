@@ -16,7 +16,8 @@ const libraries = ["places"];
 
 const CustomPaper = styled(Paper)(({ theme }) => ({
   // backgroundColor: "#204051",
-  backgroundColor: '#3B6978',
+  // backgroundColor: '#3B6978',
+  backgroundColor: '#84A9AC',
   width: "70%",
   padding: "2em",
 }));
