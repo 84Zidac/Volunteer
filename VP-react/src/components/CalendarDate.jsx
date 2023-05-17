@@ -7,9 +7,17 @@ import "./Input.css";
 import "./CalendarDate.css";
 import axios from 'axios';
 import Map from "./Map";
-
+import { Paper } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 const libraries = ["places"];
+
+const CustomPaper = styled(Paper)(({ theme }) => ({
+  // backgroundColor: "#204051",
+  backgroundColor: '#3B6978',
+  width: "70%",
+  padding: "2em",
+}));
 
 export default function CalendarDate() {
   const { date } = useParams();
@@ -115,7 +123,8 @@ export default function CalendarDate() {
   }
 
 return (
-  <div>
+  <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+    <CustomPaper>
     <h1>Calendar Date: {formattedDate}</h1>
     {weatherData && (
       <div>
@@ -193,11 +202,13 @@ return (
         </ul>
       </div>
     )}
+  
   </div>
+  </CustomPaper>
   <div style={{ display: "flex", justifyContent: "center" }}>
           <Map events={events} register={handleRegisterClick} />
-        </div>
   </div>
+</div>
 );
           }
 
