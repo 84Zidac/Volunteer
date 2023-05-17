@@ -11,6 +11,7 @@ import { CheckInPage } from "./components/CheckInPage";
 import EventCreationPage from "./components/EventCreationPage";
 import EventOrganizerDashboard from "./components/EventOrganizerDashboard";
 import Profile from "./components/Profile";
+import EventDetailsPage from "./components/EventDetailsPage";
 
 
 
@@ -55,7 +56,12 @@ const router = createBrowserRouter([
             {
                 path: "user/profile",
                 element: <Profile/>
-            }
+            },
+            {
+                path: "event-details/:eventId", 
+                element: <EventDetailsPage />,
+            },
+
         ],
     },
 ]);

@@ -190,3 +190,25 @@ def events_on_date(request, date):
         event_list.append(event_dict)
 
     return JsonResponse({'events': event_list, 'success': True})
+
+
+@api_view(["GET"])
+def event_detail(request, eventId):
+    try:
+        event = Event.objects.get(id=eventId)
+    except Event.DoesNotExist:
+        return JsonResponse({'message': 'Event not found', 'success': False})
+    
+    event_dict = {
+        'id': event.id,  
+        'event_name': event.event_name,
+        'start_time': event.start_time.isoformat(),
+        'end_time': event.end_time.isoformat(),
+        'description': event.description,
+        'volunteers_required': event.volunteers_required,
+        'protective_equipment': event.protective_equipment,
+        'address': event.street_address,
+        'organization': event.organization.organization_name
+    }
+
+    return JsonResponse({'event': event_dict, 'success': True})

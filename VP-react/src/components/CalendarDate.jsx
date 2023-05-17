@@ -9,6 +9,8 @@ import axios from 'axios';
 import Map from "./Map";
 import { Paper } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { Link } from 'react-router-dom';
+
 
 const libraries = ["places"];
 
@@ -164,10 +166,16 @@ return (
         <ul>
           {events.map((event, index, id) => (
             <li key={index}>
-            {event.event_name} - {event.start_time} to {event.end_time}
-            <button onClick={() => handleRegisterClick(event.id)}>Register</button>
-            <button onClick={() => handleUnRegisterClick(event.id)}>Unregister</button>
-            <span>Event ID: {event.id}</span>
+            {/* {event.event_name} - {event.start_time} to {event.end_time} */}
+            <div>
+              <Link to={`/event-details/${event.id}`}> 
+                Event ID: {event.id} - {event.event_name} - {event.start_time} to {event.end_time}
+              </Link>
+
+              <button onClick={() => handleRegisterClick(event.id)}>Register</button>
+              <button onClick={() => handleUnRegisterClick(event.id)}>Unregister</button>
+            </div>
+            {/* <span>Event ID: {event.id}</span> */}
           </li>
           ))}
         </ul>

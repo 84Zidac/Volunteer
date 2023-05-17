@@ -1,0 +1,9 @@
+.container,
+.container * {
+  color: #fff;
+}
+
+.container .custom-calendar,
+.container .custom-calendar * {
+  color: #000;
+}
