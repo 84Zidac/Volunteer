@@ -206,7 +206,7 @@ return (
   </div>
   </CustomPaper>
   <div style={{ display: "flex", justifyContent: "center" }}>
-          <Map events={events} register={handleRegisterClick} />
+          <Map events={events} register={handleRegisterClick} unregister={handleUnRegisterClick} />
   </div>
 </div>
 );

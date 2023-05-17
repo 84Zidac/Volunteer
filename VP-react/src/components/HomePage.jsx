@@ -79,7 +79,7 @@ export default function HomePage() {
           Find Events Near You
         </h2>
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <Map events={allEvents} register={null} />
+          <Map events={allEvents} register={null} unregister={null} />
         </div>
       </div>
     </>
