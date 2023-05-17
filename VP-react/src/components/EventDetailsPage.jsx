@@ -1,6 +1,15 @@
 // VP-react/src/components/EventDetailsPage.jsx
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { styled } from '@mui/material/styles';
+import { Paper } from '@mui/material';
+
+const CustomPaper = styled(Paper)(({ theme }) => ({
+  // backgroundColor: "#204051",
+  backgroundColor: '#3B6978',
+  width: "70%",
+  padding: "2em",
+}));
 
 export default function EventDetailsPage() {
   const { eventId } = useParams();
@@ -36,6 +45,7 @@ export default function EventDetailsPage() {
 
   return (
     <div>
+      <CustomPaper>
       <h1>Event Details</h1>
       <p>ID: {event.id}</p>
       <p>Name: {event.event_name}</p>
@@ -65,6 +75,7 @@ export default function EventDetailsPage() {
           })}
         </div>
       )}
+      </CustomPaper>
     </div>
   );
 }
