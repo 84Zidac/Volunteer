@@ -3,11 +3,13 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { styled } from '@mui/material/styles';
 import { Paper } from '@mui/material';
+import "./EventDetailsPage.css";
 
 const CustomPaper = styled(Paper)(({ theme }) => ({
   // backgroundColor: "#204051",
   // backgroundColor: '#3B6978',
   backgroundColor: '#84A9AC',
+  color: '#fff',
   width: "70%",
   padding: "2em",
 }));
@@ -16,6 +18,7 @@ export default function EventDetailsPage() {
   const { eventId } = useParams();
   const [event, setEvent] = useState(null);
   const [weatherData, setWeatherData] = useState(null);
+  const [volunteers, setVolunteers] = useState([]);
 
   useEffect(() => {
     fetch(`/events/${eventId}`)
@@ -23,6 +26,14 @@ export default function EventDetailsPage() {
       .then(data => setEvent(data.event))
       .catch(error => console.error("Error:", error));
   }, [eventId]);
+
+  useEffect(() => {
+    fetch(`/volunteers_list_by_event_id/${eventId}`)
+      .then(response => response.json())
+      .then(data => setVolunteers(data.volunteers))
+      .catch(error => console.error("Error:", error));
+  }, [eventId]);
+
 
   useEffect(() => {
     if (event && event.address) {
@@ -58,7 +69,43 @@ export default function EventDetailsPage() {
       <p>Address: {event.address}</p>
       <p>Organization: {event.organization}</p>
 
+      {/* volunteers registered for this event */}
+      <div>
+        <h2>Registered Volunteers:</h2>
+        {volunteers.length === 0 ? (
+          <p>No volunteers registered yet.</p>
+        ) : (
+          volunteers.map(volunteer => (
+            <p key={volunteer.id}>
+              Name: {volunteer.name}, Attendance: {volunteer.attendance ? "Yes" : "No"}
+            </p>
+          ))
+        )}
+      </div>
+
+      {/* with css */}
       {weatherData && (
+        <div>
+          <h1>5-day forecast for {weatherData.city.name}, {weatherData.city.country}</h1>
+          <div className="weather-forecast-container">
+            {weatherData.list.map((item, index) => {
+              if (index % 8 === 0) {
+                return (
+                  <div key={item.dt} className="weather-forecast-item">
+                    <h3>{new Date(item.dt_txt).toLocaleDateString()}</h3>
+                    <p>Temperature: {item.main.temp}°F</p>
+                    <p>Humidity: {item.main.humidity}%</p>
+                  </div>
+                );
+              } else {
+                return null;
+              }
+            })}
+          </div>
+        </div>
+      )}
+      {/* without css */}
+      {/* {weatherData && (
         <div>
           <h1>5-day forecast for {weatherData.city.name}, {weatherData.city.country}</h1>
           {weatherData.list.map((item, index) => {
@@ -75,7 +122,7 @@ export default function EventDetailsPage() {
             }
           })}
         </div>
-      )}
+      )} */}
       </CustomPaper>
     </div>
   );
