@@ -87,14 +87,15 @@ export default function Profile(){
             <Box
               sx={{
                 width: 600,
-                height: 600,
+                height: 550,
                 backgroundColor: '#84A9AC',
                 pt: 2, pr: 3, pb: 4, pl: 5,
                 borderRadius: '10%',
+                marginLeft: '4em',
               }}>
                 <div className="profile-div">
                   <Typography variant="h4" gutterBottom>
-                    <u>My Profile</u>
+                    <b>My Profile</b>
                     </Typography>
                   <Typography variant="h6" gutterBottom>
                     Full Name: {capitalized(user.name)}
@@ -105,7 +106,7 @@ export default function Profile(){
                   { user.isCoordinator && <div className="profile-subdiv">
                     <hr></hr>
                     <Typography variant="h4" gutterBottom>
-                    <u>Organization Details</u>
+                    <b>Organization Details</b>
                     </Typography>
                     <Typography variant="h6" gutterBottom>
                       Name: {organization.organization_name}
@@ -117,7 +118,7 @@ export default function Profile(){
                       Website: {organization.website}
                     </Typography>
                     <Typography variant="h6" gutterBottom>
-                      Phone number:{organization.phone_number}
+                      Phone number: {organization.phone_number}
                     </Typography>              
                     <Typography variant="h6" gutterBottom>
                       Email: {organization.contact_email}

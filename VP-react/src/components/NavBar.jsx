@@ -7,6 +7,7 @@ import "./Button.css";
 import { AppBar } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
+import logo from '../images/icon.png'
 
 const theme = createTheme({
     palette: {
@@ -46,7 +47,15 @@ export const NavBar = ()=> {
             <AppBar color="primary">
                 <div className="nav-buttons">
                     <div className="logo">
+                        <img src={logo} style={{width: '7%',
+                                                height:'7%',
+                                                borderColor: 'white', 
+                                                border: 'solid', 
+                                                marginTop:'0.8em', 
+                                                borderWidth: '1px', 
+                                                marginRight:'0.8em'}}/>
                         <h1>VolunteerCompass</h1>
+                        
                     </div>
                     <div className="right-buttons">
                         {user && user.name && user.isCoordinator ? (
