@@ -5,6 +5,14 @@
 import { useState } from 'react';
 import ReactCalendar from 'react-calendar';
 import { useNavigate } from 'react-router-dom';
+import { Paper } from '@mui/material';
+import { styled } from '@mui/material/styles';
+
+const CustomPaper = styled(Paper)(({ theme }) => ({
+  backgroundColor: '#84A9AC',
+  width:"70%",
+  padding:"2em",
+}));
 
 export function CalendarComponent() {
   const navigate = useNavigate();
@@ -14,11 +22,15 @@ export function CalendarComponent() {
   };
 
   return (
+    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+    <CustomPaper>
     <div className='app'>
       {/* <h1 className='text-center'>React Calendar</h1> */}
       <div className='calendar-container'>
         <ReactCalendar onClickDay={handleDateClick} />
       </div>
+    </div>
+    </CustomPaper>
     </div>
   );
 }
