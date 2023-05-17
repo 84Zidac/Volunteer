@@ -12,7 +12,7 @@ export const CheckInPage = () => {
     
     return (
         <>
-        {formattedDate > selectedEventDate ? (<h1>Volunteers checked in</h1>) : (<h1>Check in Volunteers</h1>)}
+        {formattedDate > selectedEventDate ? (<h1>Volunteers Checked in</h1>) : (<h1>Check in Volunteers</h1>)}
         <h2>Event: {location.state.selectedEventName}</h2>
         <div className="CheckInPageContainer" >
             <VolunteersList selectedEventId={location.state.selectedEventId} selectedEventDate = {selectedEventDate} formattedDate = {formattedDate}/>
