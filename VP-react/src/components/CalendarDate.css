@@ -16,6 +16,16 @@ margin-bottom: 1rem;
 margin-right: 1rem;
 }
 
+.container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .centered-container {
+    display: flex;
+    justify-content: center;
+  }
+
 /* .nav-button {
 display: inline-block;
 } */
