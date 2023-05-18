@@ -143,6 +143,12 @@ export default function Profile(){
                     style = {{width: '500px'}}
                     inputProps={{ maxLength: 500}}
                     onChange={(e)=> {setAboutMe(e.target.value)}}
+                    sx={{
+                      "& .MuiInputBase-input.Mui-disabled": {
+                        WebkitTextFillColor: "#204051",
+                        fontWeight:'bold',
+                      },
+                    }}
                     InputProps={{
                       style: {
                         color: '#204051',
@@ -163,7 +169,7 @@ export default function Profile(){
                   </div>
                   } 
                     {save  && (
-                      <Alert severity="success" onClose={() => setSave(false)}>
+                      <Alert severity="info" onClose={() => setSave(false)}>
                         Saved!
                       </Alert> )}
                   <button onClick={openChangePasswordDialog} className='change-button'>
@@ -194,7 +200,7 @@ export default function Profile(){
                     Your new passwords didn't match. Try again!
                   </Alert> )}
                   {changeSuccess && (
-                  <Alert severity="success" onClose={() => setChangeSuccess(false)}>
+                  <Alert severity="info" onClose={() => setChangeSuccess(false)}>
                     Your password was changed!
                   </Alert> )}
                 </Dialog>

@@ -42,7 +42,7 @@ export default function EventCreationPage() {
       <h1 style={{color: 'white'}}>Create an Event</h1>
 
       <form 
-        onSubmit={(e) => {
+        onSubmit={ async(e) => {
           e.preventDefault();
 
           // Check if end time is after start time
@@ -51,7 +51,7 @@ export default function EventCreationPage() {
             return;
           }
           
-          createEvent(
+          await createEvent(
             eventName,
             startTime,
             endTime,
@@ -158,6 +158,7 @@ export default function EventCreationPage() {
             selectProps={{
               value: streetAddress,
               onChange: setStreetAddress,
+              placeholder: "Select address..."
             }}
             >
             <input

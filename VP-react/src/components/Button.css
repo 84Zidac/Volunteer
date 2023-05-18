@@ -45,7 +45,7 @@
 }
 
 .log-in-button-div {
-    display: flex;
-    flex-direction: row;
-    gap:10px;
+    display: block;
+    align-self: baseline;
+    margin-left: 6rem;
 }

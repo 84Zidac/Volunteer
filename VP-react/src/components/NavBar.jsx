@@ -64,13 +64,13 @@ export const NavBar = ()=> {
                                     <button className="nav-button">Home</button>
                                 </Link>
                                 <Link to="/event-creation">
-                                    <button className="nav-button">Event Creation Page</button>
+                                    <button className="nav-button" style ={{whiteSpace: 'nowrap'}}>Create Events</button>
                                 </Link>
                                 <Link to="/organizer/dashboard">
                                     <button className="nav-button">Dashboard</button>
                                 </Link>
                                 <Link to="/">
-                                    <button className="nav-button" onClick={handleLogout}>LOG OUT</button>
+                                    <button className="nav-button" onClick={handleLogout} style ={{whiteSpace: 'nowrap'}}>LOG OUT</button>
                                 </Link>
                                 <Avatar {...stringAvatar(user.name)} onClick={(e)=> navigate('user/profile')}/>
                             </div>
@@ -84,7 +84,7 @@ export const NavBar = ()=> {
                                     <button className="nav-button">Dashboard</button>
                                 </Link>
                                 <Link to="/">
-                                    <button className="nav-button" onClick={handleLogout}>LOG OUT</button>
+                                    <button className="nav-button" onClick={handleLogout} style ={{whiteSpace: 'nowrap'}}>LOG OUT</button>
                                 </Link>
                                 <Avatar {...stringAvatar(user.name)} onClick={(e)=> navigate('user/profile')}/>
                             </div>
