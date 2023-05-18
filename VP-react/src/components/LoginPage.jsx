@@ -57,7 +57,7 @@ export const LogIn = () => {
     <ThemeProvider theme={theme}>
     <Grid container justifyContent="center" alignItems="center">
       <Grid item xs={12} sm={8} md={6} lg={4}>
-        <Paper style={{ padding: 15, paddingLeft: 30, backgroundColor: "#3B6978", width: '400px', height: '210px', }}>
+        <Paper style={{ padding: 15, paddingLeft: 30, backgroundColor: "#3B6978", width: '400px', height: '200px', }}>
           <form className="log-in-form" onSubmit={handleLogin}>
             <h3 style = {{color:"white"}}>Log In</h3>
             <div className="log-in-input-div">
@@ -95,11 +95,11 @@ export const LogIn = () => {
               <input type="reset" value="Reset" style={{marginLeft: 10}}className="nav-button" onClick={() => [setEmail(""), setPassword("")]}/>
             </div>
           </form>
-          {error && (
-        <Alert severity="error" onClose={() => setError(false)}>
+        </Paper>
+        {error && (
+        <Alert sx={{width: '412px'}}severity="error" onClose={() => setError(false)}>
           Wrong password or email. Try again!
         </Alert> )}
-        </Paper>
       </Grid>
     </Grid>
     </ThemeProvider>
