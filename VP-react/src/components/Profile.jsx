@@ -124,10 +124,10 @@ export default function Profile(){
                       Email: {organization.contact_email}
                     </Typography>
                     </div>}
-                  {!user.isCoordinator && eventsAttended && 
+                  {!user.isCoordinator &&
                     <div className="profile-subdiv">
                   <Typography variant="h6" gutterBottom>
-                    Events attended: {eventsAttended}
+                    Events attended: {eventsAttended || "0"}
                   </Typography>
                   <Typography variant="h6" gutterBottom>
                     About me:
