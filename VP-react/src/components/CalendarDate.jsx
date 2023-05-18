@@ -15,7 +15,7 @@ const libraries = ["places"];
 
 const CustomPaper = styled(Paper)(({ theme }) => ({
   color: '#fff',
-  backgroundColor: '#84A9AC',
+  backgroundColor: '#84A9AC', 
   width: "70%",
   padding: "2em",
 }));
@@ -117,12 +117,13 @@ export default function CalendarDate() {
                 {events.map((event, index) => (
                   <li key={index}>
                     <div>
-                      <Link to={`/event-details/${event.id}`}>
-                        Event ID: {event.id} - {event.event_name} - {new Date(event.start_time).toLocaleString([], { hour: '2-digit', minute: '2-digit' })} to {new Date(event.end_time).toLocaleString([], { hour: '2-digit', minute: '2-digit' })}
+                      <Link to={`/event-details/${event.id}`} style={{ color: '#fff', fontSize: '1.2rem', fontWeight: 'bold' }}>
+                        {event.event_name} 
                       </Link>
-                      <button className="nav-button" onClick={() => handleRegisterClick(event.id)}>Register</button>
-                      <button className="nav-button" onClick={() => handleUnRegisterClick(event.id)}>Unregister</button>
-                    </div>
+                      <div>
+                      <button className="register-button" onClick={() => handleRegisterClick(event.id)}>Register</button>
+                      <button className="register-button" onClick={() => handleUnRegisterClick(event.id)}>Unregister</button>
+                    </div></div>
                   </li>
                 ))}
               </ul>

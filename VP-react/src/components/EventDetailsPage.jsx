@@ -51,6 +51,18 @@ export default function EventDetailsPage() {
     }
   }, [event]);
 
+  function convertTime(datetimeString){
+    const datetime = new Date(datetimeString);
+    datetime.setHours(datetime.getHours() + 5);
+    const formattedTime = datetime.toLocaleString(undefined, {
+    hour: "numeric",
+    minute: "numeric",
+    });
+    return (
+    `${formattedTime}`
+    )
+  }
+
   if (!event) {
     return <div>Loading...</div>;
   }
@@ -61,8 +73,12 @@ export default function EventDetailsPage() {
       <h1>Event Details</h1>
       <p>ID: {event.id}</p>
       <p>Name: {event.event_name}</p>
-      <p>Start Time: {event.start_time}</p>
-      <p>End Time: {event.end_time}</p>
+      {/* <p>Start Time: {new Date(event.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p> */}
+      {/* <p>End Time: {event.end_time}{new Date(event.end_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p> */}
+      <p>Start Time: {convertTime(event.start_time)}</p>
+      <p>End Time: {convertTime(event.end_time)}</p>
+      {/* <StyledTableCell align="right">{convertTime(row.start_time)}</StyledTableCell> */}
+      {/* <StyledTableCell align="right">{convertTime(row.end_time)}</StyledTableCell> */}
       <p>Description: {event.description}</p>
       <p>Volunteers Required: {event.volunteers_required}</p>
       <p>Protective Equipment: {event.protective_equipment}</p>
